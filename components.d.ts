@@ -7,18 +7,23 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
-    HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
-    IconCommunity: typeof import('./src/components/icons/IconCommunity.vue')['default']
-    IconDocumentation: typeof import('./src/components/icons/IconDocumentation.vue')['default']
-    IconEcosystem: typeof import('./src/components/icons/IconEcosystem.vue')['default']
-    IconSupport: typeof import('./src/components/icons/IconSupport.vue')['default']
-    IconTooling: typeof import('./src/components/icons/IconTooling.vue')['default']
+    DemoView: typeof import('./src/components/demo/DemoView.vue')['default']
+    FreshGood: typeof import('./src/components/home/homeFloorItem/FreshGood.vue')['default']
+    GoodDetail: typeof import('./src/components/goodlist/GoodDetail.vue')['default']
+    GoodList: typeof import('./src/components/goodlist/GoodList.vue')['default']
+    HomeBrand: typeof import('./src/components/home/homeFloorItem/HomeBrand.vue')['default']
+    HomeFloor: typeof import('./src/components/home/homeFloor/HomeFloor.vue')['default']
+    HomeNav: typeof import('./src/components/home/homeNav/HomeNav.vue')['default']
+    HomePopular: typeof import('./src/components/home/homeFloorItem/HomePopular.vue')['default']
+    LightningDeals: typeof import('./src/components/home/homeFloorItem/LightningDeals.vue')['default']
+    LoadingView: typeof import('./src/components/loading/LoadingView.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SwiperView: typeof import('./src/components/swiper/SwiperView.vue')['default']
     TabbarView: typeof import('./src/components/tabbar/TabbarView.vue')['default']
-    TheWelcome: typeof import('./src/components/TheWelcome.vue')['default']
+    VanIcon: typeof import('vant/es')['Icon']
+    VanLoading: typeof import('vant/es')['Loading']
     VanTabbar: typeof import('vant/es')['Tabbar']
     VanTabbarItem: typeof import('vant/es')['TabbarItem']
-    WelcomeItem: typeof import('./src/components/WelcomeItem.vue')['default']
   }
 }

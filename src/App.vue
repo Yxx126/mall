@@ -3,10 +3,16 @@ import TabbarView from '@/components/tabbar/TabbarView.vue';
 </script>
 
 <template>
-  <router-view></router-view>
+  <keep-alive>
+    <router-view></router-view>
+  </keep-alive>
+
   <tabbar-view />
 </template>
 
-<style lang='less' scoped>
-
+<style lang='less'>
+  body {
+    background-color: #eee;
+    padding-bottom: 50px;
+  }
 </style>

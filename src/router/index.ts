@@ -1,4 +1,8 @@
+import { getCurrentInstance } from 'vue';
 import { createRouter, createWebHistory } from 'vue-router'
+
+// const instance = getCurrentInstance()
+// let timer: any
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -21,9 +25,40 @@ const router = createRouter({
     {
       path: '/my',
       name: 'my',
-      component: () => import('../views/MyVIew.vue')
+      component: () => import('../views/MyView.vue')
+    },
+    {
+      path: '/goodlist',
+      name: 'goodlist',
+      component: () => import('../views/GoodList.vue')
+    },
+    {
+      path: '/gooddetail',
+      name: 'gooddetail',
+      component: () => import('../views/GoodDetail.vue')
+    },
+    {
+      path: '/branddetail',
+      name: 'branddetail',
+      component: () => import('../views/BrandDetail.vue')
+    },
+    {
+      path: '/correlationlist',
+      name: 'correlationlist',
+      component: () => import('../views/CorrelationList.vue')
     },
   ]
+})
+
+router.beforeEach((to, from, next) => {
+  // if(to.name !== '') {
+  //   instance?.proxy?.$Loading.show()
+  //   timer = setTimeout(() => {
+  //     instance?.proxy?.$Loading?.hide()
+  //     clearTimeout(timer)
+  //   }, 500)
+    next()
+  // }
 })
 
 export default router
