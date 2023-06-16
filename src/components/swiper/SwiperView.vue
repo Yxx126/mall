@@ -1,3 +1,5 @@
+<!-- 轮播图模块 -->
+
 <script setup lang='ts'>
   import { ref, onBeforeMount} from 'vue';
   import { Pagination, A11y, Autoplay } from 'swiper';

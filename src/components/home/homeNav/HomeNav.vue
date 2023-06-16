@@ -1,3 +1,5 @@
+<!-- 首页导航栏模块 -->
+
 <script setup lang='ts'>
   import { onBeforeMount } from 'vue';
   // pinia

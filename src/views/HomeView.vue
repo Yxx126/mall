@@ -10,7 +10,7 @@
   import FreshGood from '@/components/home/homeFloorItem/FreshGood.vue';  // 首页新鲜好物
   import HomePopular from '@/components/home/homeFloorItem/HomePopular.vue';  // 首页人气推荐
   import DemoView from '@/components/demo/DemoView.vue';  // 上拉加载更多
-
+  import { scrollEvent, demoVal } from '@/hooks/scrollEvent/scrollEvent';
 
   const homeStore = useHomeStore()
   const router = [true, false, true, true, false]
@@ -24,34 +24,15 @@
     homeStore.getYoulike()
   })
 
-  // 滚动事件
   const box1Ref = ref()
   const boxRef = ref()
-  const demoVal = ref('上拉加载更多')
-  let flag = false
-  let timer
-  const scrollEvent = () => {
-    if(Math.round(boxRef.value.$el.offsetTop - box1Ref.value.scrollTop - 50) < box1Ref.value.offsetHeight) {      
-      if(flag) return false
-      flag = true
-      clearTimeout(timer)
-      timer = setTimeout(async () => {
-          const res = await homeStore.getYoulike(4)
-          console.log(res);
-          if(res === '已全部加载完毕！') {
-            demoVal.value = '已全部加载完成！'
-            // flag = true
-            return console.log('flag', flag);
-            
-          }
-          return flag = false
-      }, 1000)
-    }
+  const scroll = () => {
+    scrollEvent(boxRef, box1Ref)
   }
 </script>
 
 <template>
-  <div class="box1" @scroll="scrollEvent" ref="box1Ref">
+  <div class="box1" @scroll="scroll" ref="box1Ref">
     <swiper-view />
 
     <main>

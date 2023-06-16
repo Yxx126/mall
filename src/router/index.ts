@@ -1,8 +1,4 @@
-import { getCurrentInstance } from 'vue';
 import { createRouter, createWebHistory } from 'vue-router'
-
-// const instance = getCurrentInstance()
-// let timer: any
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -51,14 +47,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  // if(to.name !== '') {
-  //   instance?.proxy?.$Loading.show()
-  //   timer = setTimeout(() => {
-  //     instance?.proxy?.$Loading?.hide()
-  //     clearTimeout(timer)
-  //   }, 500)
-    next()
-  // }
+  next()
 })
 
 export default router

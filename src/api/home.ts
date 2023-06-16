@@ -3,17 +3,17 @@
 import $http from './index';
 
 // 获取轮播图数据api
-export const getBannerApi = ():Promise<resData<loginData>> => $http.get('/api/banner')
+export const getBannerApi = ():Promise<resData<loginData>> => $http.get('/api/home/banner')
 // 获取首页导航栏数据api
-export const getHomeNavApi = ():Promise<resData<homeNavData>> => $http.get('/api/home-nav')
+export const getHomeNavApi = ():Promise<resData<homeNavData>> => $http.get('/api/home/home-nav')
 // 获取首页楼层头部数据api
-export const getHomeFloorApi = ():Promise<resData<homeFloorData>> => $http.get('/api/home-floor')
+export const getHomeFloorApi = ():Promise<resData<homeFloorData>> => $http.get('/api/home/home-floor')
 // 获取品牌数据api
-export const getBrandApi = ():Promise<resData<brandData>> => $http.get('/api/brand')
+export const getBrandApi = ():Promise<resData<brandData>> => $http.get('/api/home/brand')
 // 获取 秒杀专区/新鲜好物 数据api
-export const getLightningApi = (data: data):Promise<resData<lightningData>> => $http.get('/api/lightning', {params: data})
+export const getLightningApi = (data: data):Promise<resData<lightningData>> => $http.get('/api/home/lightning', {params: data})
 // 获取 猜你喜欢 数据api
-export const getYoulikeApi = (data: data):Promise<resData<lightningData>> => $http.get('/api/youlike', {params: data})
+export const getYoulikeApi = (data: data):Promise<resData<lightningData>> => $http.get('/api/home/youlike', {params: data})
 
 interface resData<T> {
   data: {

@@ -7,6 +7,8 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    ClassifyLeft: typeof import('./src/components/classify/ClassifyLeft.vue')['default']
+    ClassifyRight: typeof import('./src/components/classify/ClassifyRight.vue')['default']
     DemoView: typeof import('./src/components/demo/DemoView.vue')['default']
     FreshGood: typeof import('./src/components/home/homeFloorItem/FreshGood.vue')['default']
     GoodDetail: typeof import('./src/components/goodlist/GoodDetail.vue')['default']
@@ -21,6 +23,7 @@ declare module 'vue' {
     RouterView: typeof import('vue-router')['RouterView']
     SwiperView: typeof import('./src/components/swiper/SwiperView.vue')['default']
     TabbarView: typeof import('./src/components/tabbar/TabbarView.vue')['default']
+    TitleView: typeof import('./src/components/title/TitleView.vue')['default']
     VanIcon: typeof import('vant/es')['Icon']
     VanLoading: typeof import('vant/es')['Loading']
     VanTabbar: typeof import('vant/es')['Tabbar']
