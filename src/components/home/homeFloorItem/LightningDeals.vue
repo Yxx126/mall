@@ -17,7 +17,7 @@
   <main>
     <router-link :to="{ name:'gooddetail', query:{good_id:item.id} }" v-for="item in props.list" :key="item.id">
       <div class="goods-item">
-        <img :src="item.good_url.split(',')[0]">
+        <img v-lazy="item.good_url.split(',')[0]">
         <div class="main">
           <div class="name">{{ item.good_name }}</div>
           <div class="val">{{ item.good_desc }}</div>
@@ -38,7 +38,6 @@
     background-color: #fff;
     .goods-item {
       width: 165px;
-      // height: 135px;
       padding-bottom: 20px;
       background-color: #fff;
 

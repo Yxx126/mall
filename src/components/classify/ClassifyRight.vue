@@ -20,7 +20,7 @@
 <template>
   <div class="classify-right-container" :style="{ height: `${classifyStore.RightHeight}px`}">
     <div class="classify-right-item" v-for="item in classifyStore.classifyTwo" :key="item.id" @click="toGoodlistHandler(item.id)">
-      <img :src="item.url">
+      <img v-lazy="item.url">
       <div class="classify-right-item">{{ item.name }}</div>
     </div>
   </div>

@@ -2,16 +2,17 @@
 
 <script setup lang='ts'>
   const props = defineProps({
-    value: {
-      type: String,
-      default: '上拉加载更多',
+    flag: {
+      type: Boolean,
+      default: true,
     }
-  })
+  })  
 </script>
 
 <template>
   <div class="box">
-    <div>{{ props.value }}</div>
+    <van-loading v-if="props.flag" />
+    <div v-else>已全部加载完成！</div>
   </div>
 </template>
 

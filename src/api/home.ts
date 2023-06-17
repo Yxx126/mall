@@ -9,8 +9,8 @@ export const getHomeNavApi = ():Promise<resData<homeNavData>> => $http.get('/api
 // 获取首页楼层头部数据api
 export const getHomeFloorApi = ():Promise<resData<homeFloorData>> => $http.get('/api/home/home-floor')
 // 获取品牌数据api
-export const getBrandApi = ():Promise<resData<brandData>> => $http.get('/api/home/brand')
-// 获取 秒杀专区/新鲜好物 数据api
+export const getBrandApi = (data: data):Promise<resData<brandData>> => $http.get('/api/home/brand', {params:data})
+// 获取 秒杀专区/新鲜好物  人气推荐  数据api
 export const getLightningApi = (data: data):Promise<resData<lightningData>> => $http.get('/api/home/lightning', {params: data})
 // 获取 猜你喜欢 数据api
 export const getYoulikeApi = (data: data):Promise<resData<lightningData>> => $http.get('/api/home/youlike', {params: data})

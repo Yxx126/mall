@@ -10,24 +10,32 @@
   import FreshGood from '@/components/home/homeFloorItem/FreshGood.vue';  // 首页新鲜好物
   import HomePopular from '@/components/home/homeFloorItem/HomePopular.vue';  // 首页人气推荐
   import DemoView from '@/components/demo/DemoView.vue';  // 上拉加载更多
-  import { scrollEvent, demoVal } from '@/hooks/scrollEvent/scrollEvent';
+  import { scrollEvent } from '@/hooks/scrollEvent/scrollEvent';
 
   const homeStore = useHomeStore()
   const router = [true, false, true, true, false]
 
-  onBeforeMount(() => {
-    homeStore.page = 1
+  onBeforeMount(() => {    
+    homeStore.brand_page = 1
+    homeStore.lightning_page = 1
+    homeStore.fresh_page = 1
+    homeStore.toplike_page = 1
+    homeStore.youlike_page = 1
+    homeStore.scrollFlag = false
+    homeStore.demoFlag = true
+
     homeStore.youlike=[]
     homeStore.getBrand()
     homeStore.getHomeFloor()
     homeStore.getLightning()
+    homeStore.getToplike()
     homeStore.getYoulike()
   })
 
   const box1Ref = ref()
   const boxRef = ref()
   const scroll = () => {
-    scrollEvent(boxRef, box1Ref)
+    scrollEvent(boxRef, box1Ref, 'youlike', true)
   }
 </script>
 
@@ -45,13 +53,13 @@
         <template #main>
           <lightning-deals v-if="item.name === '秒杀专区'" :list="homeStore.lightning"/>
           <fresh-good v-if="item.name === '新鲜好物'" :list="homeStore.lightning" />
-          <home-popular v-if="item.name === '人气推荐'" :list="homeStore.lightning" />
+          <home-popular v-if="item.name === '人气推荐'" :list="homeStore.toplike" />
           <lightning-deals v-if="item.name === '猜你喜欢'" :list="homeStore.youlike"/>
         </template>
       </home-floor>
     </main>
 
-    <DemoView ref="boxRef" :value="demoVal" />
+    <DemoView ref="boxRef" :flag="homeStore.demoFlag" />
   </div>
 </template>
 

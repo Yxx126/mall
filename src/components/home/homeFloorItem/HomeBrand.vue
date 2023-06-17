@@ -17,7 +17,7 @@
   <main>
     <router-link :to="{ name:'branddetail', query:{name:item.name} }" v-for="item in props.list" :key="item.id">
       <div class="goods-item">
-        <img :src="item.url">
+        <img v-lazy="item.url">
         <div class="main">
           <div class="name">{{ item.name }}</div>
           <div class="val">商品数量：{{ item.count }}</div>
@@ -42,8 +42,10 @@
       background-color: #fff;
 
       img {
+        box-sizing: border-box;
         width: 100%;
         height: 75px;
+        padding: 10px 0;
       }
       .name {
         line-height: 40px;

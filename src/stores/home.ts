@@ -7,12 +7,20 @@ import { getBannerApi, getHomeNavApi, getHomeFloorApi, getBrandApi, getLightning
 export const useHomeStore = defineStore('home', {
   state:() => {
     return {
-      page: 1,
+      brand_page: 1,
+      lightning_page: 1,
+      fresh_page: 1,
+      toplike_page: 1,
+      youlike_page: 1,
+      scrollFlag: false,
+      demoFlag: true,
       banner: Array<loginData>(),
       homeNav: Array<homeNavData>(),
       homeFloor: Array<homeFloorData>(),
       brand: Array<brandData>(),
+      fresh: Array<lightningData>(),
       lightning: Array<lightningData>(),
+      toplike: Array<lightningData>(),
       youlike: Array<lightningData>(),
     }
   },
@@ -39,29 +47,69 @@ export const useHomeStore = defineStore('home', {
       this.homeFloor = res.data
     },
     // 获取品牌数据
-    async getBrand() {
-      const { data: res } = await getBrandApi()
-      if(res.code !== 200) return console.log('获取品牌数据失败！');
-      this.brand = res.data
+    async getBrand(count:number=6, flag:boolean=false) {
+      const limit = count
+      const params = { page: this.brand_page, limit: limit }
+      const { data: res } = await getBrandApi(params)
+      if(res.code === 201) {
+        return res.code
+      }
+      if(res.code !== 200) return console.log('获取品牌数据失败！');      
+      if(!flag) this.brand = res.data
+      if(flag) this.brand = [...this.brand, ...res.data]
+      this.brand_page++
     },
-    // 获取 秒杀专区/新鲜好物 数据
-    async getLightning() {
-      const params = { order: 1 }
+    // 获取秒杀专区数据
+    async getLightning(count:number=4, flag:boolean=false) {
+      const limit = count
+      const params = { order: 1, page: this.lightning_page, limit: limit }
       const { data: res } = await getLightningApi(params)
-      if(res.code !== 200) return console.log('获取 秒杀专区/新鲜好物 数据失败！');
-      this.lightning = res.data
+      if(res.code === 201) {
+        return res.code
+      }
+      if(res.code !== 200) return console.log('获取秒杀专区数据失败！');
+      if(!flag) this.lightning = res.data
+      if(flag) this.lightning = [...this.lightning, ...res.data]
+      this.lightning_page++
+    },
+    // 获取新鲜好物数据
+    async getFresh(count:number=4, flag:boolean=false) {
+      const limit = count
+      const params = { order: 4, page: this.lightning_page, limit: limit }
+      const { data: res } = await getLightningApi(params)
+      if(res.code === 201) {
+        return res.code
+      }
+      if(res.code !== 200) return console.log('获取新鲜好物数据失败！');
+      if(!flag) this.fresh = res.data
+      if(flag) this.fresh = [...this.fresh, ...res.data]
+      this.fresh_page++
     },
     // 获取 人气推荐 数据
-    async getYoulike(count:number=4) {
+    async getToplike(count:number=4, flag:boolean=false) {
       const limit = count
-      const params = { page: this.page, limit: limit }
+      const params = { order: 2, page: this.toplike_page, limit: limit }
+      const { data: res } = await getLightningApi(params)
+      if(res.code === 201) {
+        return res.code
+      }      
+      if(res.code !== 200) return console.log('获取人气推荐数据失败！');
+      if(!flag) this.toplike = res.data
+      if(flag) this.toplike = [...this.toplike, ...res.data]
+      this.toplike_page++
+    },
+    // 获取 猜你喜欢 数据
+    async getYoulike(count:number=4, flag:boolean=false) {
+      const limit = count
+      const params = { origin: 3, page: this.youlike_page, limit: limit }
       const { data: res } = await getYoulikeApi(params)
       if(res.code === 201) {
-        return res.message
+        return res.code
       }
-      if(res.code !== 200) return console.log(res.message);
-      this.youlike = [...this.youlike, ...res.data]
-      this.page++
+      if(res.code !== 200) return console.log('获取猜你喜欢数据失败！');
+      if(!flag) this.youlike = res.data
+      if(flag) this.youlike = [...this.youlike, ...res.data]
+      this.youlike_page++
     },
   }
 })
