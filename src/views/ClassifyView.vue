@@ -10,7 +10,7 @@
 
   onBeforeMount(() => {
     classifyStore.getclassifyOne()
-    classifyStore.getclassifyTwo(1)
+    classifyStore.getclassifyTwo()
   })
 </script>
 

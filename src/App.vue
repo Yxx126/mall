@@ -3,10 +3,7 @@ import TabbarView from '@/components/tabbar/TabbarView.vue';
 </script>
 
 <template>
-  <keep-alive>
-    <router-view></router-view>
-  </keep-alive>
-
+  <router-view></router-view>
   <tabbar-view />
 </template>
 

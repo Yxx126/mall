@@ -15,11 +15,25 @@
       }
     })
   }
+
+  type classifyTwoData = { id:number, uid:number, name:string, url:string }
+
+  let list = Array<classifyTwoData>()
+  classifyStore.twoList = []
+  for(let i=1; i<=classifyStore.classifyOne.length; i++) {
+    list = []
+    classifyStore.classifyTwo.forEach(item => {
+      if(item.uid === i) {
+        list.push(item)
+      }
+    })
+    classifyStore.twoList.push(list)
+  }
 </script>
 
 <template>
   <div class="classify-right-container" :style="{ height: `${classifyStore.RightHeight}px`}">
-    <div class="classify-right-item" v-for="item in classifyStore.classifyTwo" :key="item.id" @click="toGoodlistHandler(item.id)">
+    <div class="classify-right-item" v-for="item in classifyStore.twoList[classifyStore.activeIndex-1]" :key="item.id" @click="toGoodlistHandler(item.id)">
       <img v-lazy="item.url">
       <div class="classify-right-item">{{ item.name }}</div>
     </div>
