@@ -1,7 +1,6 @@
 <!-- 分类页面一级标签模块 -->
 
 <script setup lang='ts'>
-  import { watchEffect } from 'vue';
   import { useClassifyStore } from '@/stores/classify';
 
   const classifyStore = useClassifyStore()
@@ -10,10 +9,6 @@
     classifyStore.activeIndex = id
   }
   
-  watchEffect(() => {
-    const aaa = Math.ceil(classifyStore.twoList.length/3)*90
-    classifyStore.RightHeight = aaa
-  })
 </script>
 
 <template>

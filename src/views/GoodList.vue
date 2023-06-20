@@ -1,3 +1,5 @@
+<!-- 商品列表页面 -->
+
 <script setup lang='ts'>
   import { ref, onBeforeMount } from 'vue';
   import { useRoute, useRouter } from 'vue-router';

@@ -61,11 +61,14 @@
 
     <DemoView ref="boxRef" :flag="homeStore.demoFlag" />
   </div>
+
+  <tabbar-view />
 </template>
 
 <style lang="less" scoped>
   .box1 {
     height: 100vh;
+    padding-bottom: 50px;
     overflow: scroll;
     transition: padding-bottom 0.5s;
   }

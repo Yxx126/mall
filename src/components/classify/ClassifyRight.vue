@@ -15,20 +15,6 @@
       }
     })
   }
-
-  type classifyTwoData = { id:number, uid:number, name:string, url:string }
-
-  let list = Array<classifyTwoData>()
-  classifyStore.twoList = []
-  for(let i=1; i<=classifyStore.classifyOne.length; i++) {
-    list = []
-    classifyStore.classifyTwo.forEach(item => {
-      if(item.uid === i) {
-        list.push(item)
-      }
-    })
-    classifyStore.twoList.push(list)
-  }
 </script>
 
 <template>

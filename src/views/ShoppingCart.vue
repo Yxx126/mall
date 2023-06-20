@@ -8,6 +8,8 @@
   <div>
     购物车
   </div>
+
+  <tabbar-view />
 </template>
 
 <style lang='less' scoped>

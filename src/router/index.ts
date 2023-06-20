@@ -43,6 +43,11 @@ const router = createRouter({
       name: 'correlationlist',
       component: () => import('../views/CorrelationList.vue')
     },
+    {
+      path: '/login',
+      name: 'login',
+      component: () => import('../views/LoginView.vue')
+    },
   ]
 })
 
