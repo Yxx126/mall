@@ -1,7 +1,7 @@
 <script setup lang='ts'>
   import { ref, onBeforeMount } from 'vue';
   import { useRouter } from 'vue-router';
-  import { useUserinfoStore } from '@/stores/userinfo';
+  import { useUserinfoStore } from '@/stores/user';
   import { showFailToast } from 'vant'
   import 'vant/es/toast/style'
 
@@ -23,8 +23,8 @@
 
   // 提交的表单
   const userLogin = {
-    username: ref(''),
-    password: ref(''),
+    username: ref('user1'),
+    password: ref('123456'),
   }
   const userReguser = {
     username: ref(''),
@@ -57,15 +57,16 @@
     password:string,
     confirmPassword?:string,
   }
-  // 登录函数
-  const loginHandler = async (e:From) => {
-    userinfoStore.getLogin(e)
-  }
+
   const LeftX = ref(0)
   // 登录/注册切换函数
   const updateLore = () => {
     title.value === '登录'? title.value = '注册': title.value = '登录'
     LeftX.value === 0? LeftX.value = -100: LeftX.value = 0
+  }
+  // 登录函数
+  const loginHandler = async (e:From) => {
+    await userinfoStore.getLogin(e)
   }
   // 注册函数
   const reguserHandler = async (e:From) => {
