@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
-import { getGooddetailApi, getGoodInventorylApi, addViewsApi } from '@/api/goods';
+import { getGooddetailApi, getGoodInventorylApi, addViewsApi, searchSuggestionApi } from '@/api/goods';
 import { showFailToast } from 'vant';
+import 'vant/es/toast/style'
 
 export const useGoodStore = defineStore('good', {
   state:() => {
@@ -18,6 +19,10 @@ export const useGoodStore = defineStore('good', {
       good_invs: Array(),
       // 所选配置库存
       good_inv: Object(),
+      // 搜索建议列表
+      searchlist: Array<goodlistData>(),
+      // 搜索历史
+      search_history: [],
     }
   },
   getters: {
@@ -63,5 +68,14 @@ export const useGoodStore = defineStore('good', {
     async addViews(id:number) {
       await addViewsApi({id:id})
     },
+    // 获取搜索建议列表
+    async getSearchlist(val:string) {
+      const params = {val:val, page:1, limit:10}
+      const { data: res } = await searchSuggestionApi(params)
+      if(res.code !== 200) return showFailToast(res.message)
+      this.searchlist = res.data
+    },
   }
 })
+
+type goodlistData = {id:number, uid:number, good_name:string, good_desc:string, good_price:number, good_url:string}

@@ -14,7 +14,6 @@
     router.go(-1)
   }
 
-
   // 商品购买类型
   let typeKey:string[] = []
   let type:string[] = []
@@ -23,6 +22,14 @@
   let parameter:string[] = []
 
   onBeforeMount(async () => {
+    const list = goodStore.good_type
+    list['id'] = route.query.good_id
+    await goodStore.getGooddetail(route.query.good_id)
+    await goodStore.getGoodInventory(route.query.good_id)
+    await goodStore.addViews(route.query.good_id)
+    images.value = goodStore.good.good_url.split(',')
+    goodStore.getGoodInv(typeKey)
+
     // 商品购买类型
     for(let key in goodStore.good.type) {
       if(goodStore.good.type[key] && key!=='id') {
@@ -37,14 +44,6 @@
         parameter.push(goodStore.good.parameter[key])
       }
     }
-
-    const list = goodStore.good_type
-    list['id'] = route.query.good_id
-    await goodStore.getGooddetail(route.query.good_id)
-    await goodStore.getGoodInventory(route.query.good_id)
-    await goodStore.addViews(route.query.good_id)
-    images.value = goodStore.good.good_url.split(',')
-    goodStore.getGoodInv(typeKey)
   })
 
   // 轮播图区域

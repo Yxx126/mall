@@ -14,7 +14,8 @@ export const getGoodlistSalesApi = (data:data):Promise<resData<goodlistData>> =>
 export const getGoodlistPriceApi = (data:data):Promise<resData<goodlistData>> => $http.get('api/classify/goodlistprice', {params:data})
 
 type data = {
-  uid?:number,
+  uid?: number,
+  val?: string|undefined,
   page?: number,
   limit?: number,
   order?: number,

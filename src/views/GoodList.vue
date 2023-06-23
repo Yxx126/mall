@@ -11,6 +11,7 @@
   const classifyStore = useClassifyStore()
 
   const goodlist_id = ref(route.query.uid)
+  const val = ref(route.query.val)
 
   const loading = ref(false)
   const finished = ref(false)
@@ -21,6 +22,7 @@
     router.go(-1)
   }
 
+  const uidActive = ref(goodlist_id)
   const activeName = ref('综合顺序')
   const updmIndex = ref(0)
   const active = (name:string) => {
@@ -32,17 +34,15 @@
      
     classifyStore.goodlist_page = 1
     finished.value = false
-    if(name === '综合顺序') classifyStore.getGoodlist(goodlist_id.value, 6, false)
-    if(name === '销量顺序') classifyStore.getGoodlistSales(goodlist_id.value, 6, false)
-    if(name === '价格') classifyStore.getGoodlistPrice(goodlist_id.value, 6, false, updmIndex.value)
-    console.log(updmIndex.value);
-    
+    if(name === '综合顺序') classifyStore.getGoodlist(goodlist_id.value, val.value, 6, false)
+    if(name === '销量顺序') classifyStore.getGoodlistSales(goodlist_id.value, val.value,  6, false)
+    if(name === '价格') classifyStore.getGoodlistPrice(goodlist_id.value, val.value, 6, false, updmIndex.value)
   }
   
   onBeforeMount(() => {
     classifyStore.goodlist_page = 1
     finished.value = false
-    classifyStore.getGoodlist(goodlist_id.value, 6, false)
+    classifyStore.getGoodlist(goodlist_id.value, val.value, 6, false)
   })
   
   // 上拉加载
@@ -54,9 +54,9 @@
     clearTimeout(timer)
     timer =setTimeout(async () => {
       let res
-      if(activeName.value === '综合顺序') res = await classifyStore.getGoodlist(goodlist_id.value, 6, true)
-      if(activeName.value === '销量顺序') res = await classifyStore.getGoodlistSales(goodlist_id.value, 6, true)
-      if(activeName.value === '价格') res = await classifyStore.getGoodlistPrice(goodlist_id.value, 6, true, updmIndex.value)
+      if(activeName.value === '综合顺序') res = await classifyStore.getGoodlist(goodlist_id.value, val.value, 6, true)
+      if(activeName.value === '销量顺序') res = await classifyStore.getGoodlistSales(goodlist_id.value, val.value, 6, true)
+      if(activeName.value === '价格') res = await classifyStore.getGoodlistPrice(goodlist_id.value, val.value, 6, true, updmIndex.value)
       loading.value = false
       if(res === 201) {
         if(classifyStore.goodlist.length == 0) finishedText.value = '暂无数据！'
@@ -74,9 +74,9 @@
     let timer
     clearTimeout(timer)
     timer = setTimeout(() => {
-      if(activeName.value === '综合顺序') classifyStore.getGoodlist(goodlist_id.value, 6, false)
-      if(activeName.value === '销量顺序') classifyStore.getGoodlistSales(goodlist_id.value, 6, false)
-      if(activeName.value === '价格') classifyStore.getGoodlistPrice(goodlist_id.value, 6, false, updmIndex.value)
+      if(activeName.value === '综合顺序') classifyStore.getGoodlist(goodlist_id.value, val.value, 6, false)
+      if(activeName.value === '销量顺序') classifyStore.getGoodlistSales(goodlist_id.value, val.value , 6, false)
+      if(activeName.value === '价格') classifyStore.getGoodlistPrice(goodlist_id.value, val.value, 6, false, updmIndex.value)
       loading.value = false;
       refreshing.value = false
     }, 1000)
@@ -93,14 +93,15 @@
     show.value = false
   }
 
-  const updateMain = async (uid:number) => {
+  const updateMain = async (uid:number) => {    
     finished.value = false
-    goodlist_id.value = uid
     hideMenu()
+    uidActive.value = uid
     classifyStore.goodlist_page = 1
     let res
-    if(activeName.value === '综合顺序') res = await classifyStore.getGoodlist(goodlist_id.value, 6, false)
-    if(activeName.value === '销量顺序') res = await classifyStore.getGoodlistSales(goodlist_id.value, 6, false)
+    if(activeName.value === '综合顺序') res = await classifyStore.getGoodlist(uid, undefined, 6, false)
+    if(activeName.value === '销量顺序') res = await classifyStore.getGoodlistSales(uid, undefined, 6, false)
+    if(activeName.value === '价格') res = await classifyStore.getGoodlistPrice(uid, undefined, 6, false, updmIndex.value)
     if(res===201) {
       if(classifyStore.goodlist.length == 0) finishedText.value = '暂无数据！'
       if(classifyStore.goodlist.length != 0) finishedText.value = '已全部加载完成！'
@@ -152,7 +153,7 @@
   <div class="more-menu" @click.stop.self="hideMenu" :style="{transform: `translateX(${left})`}">
     <div class="more-menu-item" v-for="(item, index) in classifyStore.classifyOne" :key="item.id">
       <div class="more-menu-item-name" @click.prevent>{{ item.name }}</div>
-      <van-cell :title="it.name" v-for="it in classifyStore.twoList[index]" :key="it.id" @click.stop="updateMain(it.id)" />
+      <van-cell :class="it.id==uidActive? 'active': ''" :title="it.name" v-for="it in classifyStore.twoList[index]" :key="it.id" @click.stop="updateMain(it.id)" />
     </div>
   </div>
 
@@ -249,6 +250,10 @@
         background-color: #f8f8f8;
         font-size: 15px;
         color: #303133;
+      }
+
+      .active {
+        color: #fa436a;
       }
     }
   }

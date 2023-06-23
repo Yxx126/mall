@@ -2,6 +2,7 @@
 
 <script setup lang="ts">
   import { ref, onBeforeMount } from 'vue';
+  import { useRouter } from 'vue-router';
   import { useHomeStore } from '@/stores/home';
   import SwiperView from '@/components/swiper/SwiperView.vue';  // swiper组件
   import HomeNav from '@/components/home/homeNav/HomeNav.vue';  // 首页导航栏组件
@@ -13,7 +14,8 @@
   import { scrollEvent } from '@/hooks/scrollEvent/scrollEvent';
 
   const homeStore = useHomeStore()
-  const router = [true, false, true, true, false]
+  const router = useRouter()
+  const routers = [true, false, true, true, false]
 
   onBeforeMount(() => {    
     homeStore.brand_page = 1
@@ -37,15 +39,26 @@
   const scroll = () => {
     scrollEvent(boxRef, box1Ref, 'youlike', true)
   }
+  // 跳转到搜索页面
+  const toSearch = () => {
+    router.push({name: 'search'})
+  }
 </script>
 
 <template>
+  <div class="home-search" @click="toSearch">
+    <div>
+      <van-icon name="search" size="4.8vw" color="#969799" style="padding:0 2px 0 12px;" />
+      <p style="color: #969799; font-size: 14px;">请输入搜索关键词</p>
+    </div>
+  </div>
+
   <div class="box1" @scroll="scroll" ref="box1Ref">
     <swiper-view />
 
     <main>
       <home-nav />
-      <home-floor v-for="(item, index) in homeStore.homeFloor" :key="item.id" :obj="item" :router="router[index]">
+      <home-floor v-for="(item, index) in homeStore.homeFloor" :key="item.id" :obj="item" :router="routers[index]">
         <template #header>
           <div v-if="item.name === '秒杀专区'">123</div>
           <div v-if="item.name === '猜你喜欢'"></div>
@@ -66,6 +79,17 @@
 </template>
 
 <style lang="less" scoped>
+  .home-search {
+    padding: 10px 12px;
+    background-color: #fff;
+
+    div {
+      display: flex;
+      align-items: center;
+      height: 34px;
+      background-color: #f7f8fa;
+    }
+  }
   .box1 {
     height: 100vh;
     padding-bottom: 50px;
