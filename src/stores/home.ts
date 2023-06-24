@@ -1,8 +1,10 @@
 // home页面store
 
 import { defineStore } from 'pinia'
+import { showFailToast } from 'vant';
+import 'vant/es/toast/style'
 // api
-import { getBannerApi, getHomeNavApi, getHomeFloorApi, getBrandApi, getLightningApi, getYoulikeApi } from '@/api/home';
+import { getBannerApi, getHomeNavApi, getHomeFloorApi, getBrandApi, getBrandDetailApi, getBrandGoodlistApi, getLightningApi, getYoulikeApi } from '@/api/home';
 
 export const useHomeStore = defineStore('home', {
   state:() => {
@@ -12,11 +14,14 @@ export const useHomeStore = defineStore('home', {
       fresh_page: 1,
       toplike_page: 1,
       youlike_page: 1,
+      brand_goods_page: 1,
       scrollFlag: false,
       demoFlag: true,
       banner: Array<loginData>(),
       homeNav: Array<homeNavData>(),
       homeFloor: Array<homeFloorData>(),
+      branddetail: Object(),
+      brand_goodlist: Array<lightningData>(),
       brand: Array<brandData>(),
       fresh: Array<lightningData>(),
       lightning: Array<lightningData>(),
@@ -58,6 +63,26 @@ export const useHomeStore = defineStore('home', {
       if(!flag) this.brand = res.data
       if(flag) this.brand = [...this.brand, ...res.data]
       this.brand_page++
+    },
+    // 获取品牌详情数据
+    async getBrandDetail(name:string) {
+      const { data: res } = await getBrandDetailApi({name: name})
+      if(res.code !== 200) return showFailToast(res.message)
+      this.branddetail =  res.data
+    },
+    // 获取品牌的商品数据
+    async getBrandGoodlist(name:string, limit:number=6, flag:boolean=false) {
+      const params = { name:name, page:this.brand_goods_page, limit:limit }      
+      const { data: res } = await getBrandGoodlistApi(params)
+      if(res.code === 201) {
+        if(!flag) this.brand_goodlist = res.data
+        if(flag) this.brand_goodlist = [...this.brand_goodlist, ...res.data]
+        return res.code
+      }
+      if(res.code !== 200) return console.log('获取人气推荐数据失败！');
+      if(!flag) this.brand_goodlist = res.data
+      if(flag) this.brand_goodlist = [...this.brand_goodlist, ...res.data]
+      return this.brand_goods_page++
     },
     // 获取秒杀专区数据
     async getLightning(count:number=4, flag:boolean=false) {
@@ -117,5 +142,5 @@ export const useHomeStore = defineStore('home', {
 type loginData = {id:number, url:string}
 type homeNavData = {id:number, name:string, url:string}
 type homeFloorData = {id:number, name:string, desc:string, url:string}
-type brandData = {id:number, name:string, count:number, url:string}
+type brandData = {id:number, name:string, count:number, url:string, top_url:string, sale:string}
 type lightningData = {id:number, good_name:string, good_desc:string, good_price:number, good_url:string}

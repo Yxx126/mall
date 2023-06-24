@@ -7,6 +7,7 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    BrandDesc: typeof import('./src/components/brand/BrandDesc.vue')['default']
     ClassifyLeft: typeof import('./src/components/classify/ClassifyLeft.vue')['default']
     ClassifyRight: typeof import('./src/components/classify/ClassifyRight.vue')['default']
     DemoView: typeof import('./src/components/demo/DemoView.vue')['default']
@@ -26,7 +27,6 @@ declare module 'vue' {
     VanAddressEdit: typeof import('vant/es')['AddressEdit']
     VanAddressList: typeof import('vant/es')['AddressList']
     VanButton: typeof import('vant/es')['Button']
-    VanCard: typeof import('vant/es')['Card']
     VanCell: typeof import('vant/es')['Cell']
     VanCellGroup: typeof import('vant/es')['CellGroup']
     VanCheckbox: typeof import('vant/es')['Checkbox']

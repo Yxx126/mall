@@ -7,6 +7,7 @@
   import { useShopStore } from '@/stores/shop';
   import { useUserinfoStore } from '@/stores/user';
   import { showImagePreview } from 'vant';
+  import BrandDesc from '@/components/brand/BrandDesc.vue'; // 品牌信息组件
 
   const router = useRouter()
   const route = useRoute()
@@ -203,16 +204,8 @@
         </div>
       </van-popup>
 
-      <div class="gooddetail-main-brand">
-        <div class="main-brand-name">品牌信息</div>
-        <div class="main-brand-main">
-          <img style="width: 105px; height: 35px;" :src="goodStore.good.brand.url">
-          <div class="main-brand-main-right">
-            <span>{{ goodStore.good.brand.name }}</span>
-            <span>品牌首字母: {{ goodStore.good.brand.letter }}</span>
-          </div>
-        </div>
-      </div>
+      <!-- 品牌信息组件 -->
+      <brand-desc />
     </main>
 
     <footer>
@@ -397,41 +390,6 @@
             align-items: center;
             font-size: 13px;
             color: #303133; 
-          }
-        }
-      }
-    }
-
-    .gooddetail-main-brand{
-      margin-top: 10px;
-      background-color: #fff;
-
-      .main-brand-name {
-        height: 40px;
-        line-height: 40px;
-        text-align: center;
-      }
-      .main-brand-main {
-        display: flex;
-        align-items: center;
-        height: 35px;
-        padding: 15px 25px;
-
-        .main-brand-main-right {
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-          align-items: flex-start;
-          margin-left: 15px;
-
-          span:nth-child(1) {
-            margin-bottom: 5px;
-            font-size: 18px;
-            color: #303133;
-          }
-          span:nth-child(2) {
-            font-size: 12px;
-            color: #909399;
           }
         }
       }

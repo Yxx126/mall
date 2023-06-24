@@ -48,7 +48,7 @@
   // 上拉加载
   const onLoad = async () => {
     if(finished.value === true ) return false
-    if(loading.value === true ) return false
+    if(loading.value === true ) return false    
     loading.value = true
     let timer
     clearTimeout(timer)

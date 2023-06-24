@@ -134,6 +134,7 @@
     fixed
     @click-left="onClickLeft"
   />
+  
   <div class="address-container">
     <van-address-edit
       :area-list="areaList"

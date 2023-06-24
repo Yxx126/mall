@@ -48,7 +48,7 @@
 <style lang='less' scoped>
   .swiper {
     height: 175px;
-    transition: backgroundColor 2s;
+    transition: background-color 2s;
 
     img {
       width: 100%;
