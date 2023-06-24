@@ -2,11 +2,13 @@
   import { ref, onBeforeMount } from 'vue';
   import { useRouter } from 'vue-router';
   import { useUserinfoStore } from '@/stores/user';
+  import { useShopStore } from '@/stores/shop';
   import { showFailToast } from 'vant'
   import 'vant/es/toast/style'
 
   const router = useRouter()
   const userinfoStore = useUserinfoStore()
+  const shopStore = useShopStore()
 
   onBeforeMount(() => {
     userLogin.username.value = ''
@@ -23,8 +25,8 @@
 
   // 提交的表单
   const userLogin = {
-    username: ref('user1'),
-    password: ref('123456'),
+    username: ref(''),
+    password: ref(''),
   }
   const userReguser = {
     username: ref(''),
@@ -67,6 +69,7 @@
   // 登录函数
   const loginHandler = async (e:From) => {
     await userinfoStore.getLogin(e)
+    await shopStore.getshopping()
   }
   // 注册函数
   const reguserHandler = async (e:From) => {

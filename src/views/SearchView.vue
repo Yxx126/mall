@@ -3,7 +3,7 @@
 <script setup lang='ts'>
   import { useRouter } from 'vue-router';
   import { ref, onBeforeMount } from 'vue';
-  import { useGoodStore } from '@/stores/goods';
+  import { useGoodStore } from '@/stores/good';
 import { availableParallelism } from 'os';
 
   const  goodStore = useGoodStore()

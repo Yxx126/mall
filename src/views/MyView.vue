@@ -18,6 +18,9 @@
     userinfoStore.userinfo = {}
     showSuccessToast('退出登录成功！')
   }
+  const toAddress = () => {
+    router.push({name: 'addresslist'})
+  }
 </script>
 
 <template>
@@ -66,7 +69,7 @@
             </div>
           </div>
           <div class="box3">
-            <div class="box3-item">
+            <div class="box3-item" @click="toAddress">
               <van-icon name="location" class="box3-item-icon" />
               <div class="box3-item-right">
                 <p>地址管理</p>

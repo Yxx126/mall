@@ -53,6 +53,16 @@ const router = createRouter({
       name: 'search',
       component: () => import('../views/SearchView.vue')
     },
+    {
+      path: '/addresslist',
+      name: 'addresslist',
+      component: () => import('../views/AddressList.vue')
+    },
+    {
+      path: '/address',
+      name: 'address',
+      component: () => import('../views/AddressView.vue')
+    },
   ]
 })
 

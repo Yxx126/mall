@@ -2,15 +2,8 @@
 
 <script setup lang='ts'>
   import { ref } from 'vue';
-  import { useRouter } from 'vue-router';
-
-  const router = useRouter()
 
   const active = ref(0);
-  const toNav = (name:string, index:number) => {
-    active.value = index
-    router.push({ name: name })
-  }
 </script>
 
 <template>
@@ -18,7 +11,7 @@
     <van-tabbar-item replace to="/" icon="home-o">首页</van-tabbar-item>
     <van-tabbar-item replace to="/classift" icon="apps-o">分类</van-tabbar-item>
     <van-tabbar-item replace to="/shoppingcart" icon="cart-o">购物车</van-tabbar-item>
-    <van-tabbar-item replace to="/my" icon="contact" @click="toNav('my', 3)">我的</van-tabbar-item>
+    <van-tabbar-item replace to="/my" icon="contact">我的</van-tabbar-item>
   </van-tabbar>
 </template>
 

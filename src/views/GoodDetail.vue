@@ -3,12 +3,16 @@
 <script setup lang='ts'>
   import { ref, onBeforeMount } from 'vue';
   import { useRouter, useRoute } from 'vue-router';
-  import { useGoodStore } from '@/stores/goods';
+  import { useGoodStore } from '@/stores/good';
+  import { useShopStore } from '@/stores/shop';
+  import { useUserinfoStore } from '@/stores/user';
   import { showImagePreview } from 'vant';
 
   const router = useRouter()
   const route = useRoute()
   const goodStore = useGoodStore()
+  const shopStore = useShopStore()
+  const userinfoStore = useUserinfoStore()
 
   const onClickLeft = () => {
     router.go(-1)
@@ -29,6 +33,7 @@
     await goodStore.addViews(route.query.good_id)
     images.value = goodStore.good.good_url.split(',')
     goodStore.getGoodInv(typeKey)
+    goodStore.good_addprice = 0
 
     // 商品购买类型
     for(let key in goodStore.good.type) {
@@ -79,10 +84,34 @@
   const updateType = (item:string, index:number) => {
     goodStore.selected_good_type[index] = item
     goodStore.getGoodInv(typeKey)
+  }  
+  
+  // 加入购物车
+  const addshopping = () => {
+    let str1 = ''
+    for(const key in goodStore.selected_good_type) {
+      str1 = str1 + goodStore.selected_good_type[key] + ' '
+    }
+    shopStore.addshopping({
+      user_id: userinfoStore.userinfo.id,
+      good_id: goodStore.good.id,
+      good_name: goodStore.good.good_name,
+      good_desc: goodStore.good.good_desc,
+      good_url: goodStore.good.good_url.split(',')[0],
+      good_price: goodStore.good_price,
+      good_count: 1,
+      disposition: str1,
+    })
+    shopStore.getshopping()
   }
-  // 跳转到购物车页面
-  const toShopCart = () =>{
-    router.push({name: 'shoppingcart'})
+  // 跳转到品牌详情
+  const toBrand = (name:string) => {
+    router.push({
+      name: 'branddetail',
+      query: {
+        name: name,
+      }
+    })
   }
 </script>
 
@@ -194,9 +223,9 @@
     </footer>
 
     <van-action-bar style="height: 50px;">
-      <van-action-bar-icon icon="cart-o" text="购物车" badge="5" @click="toShopCart" />
-      <van-action-bar-icon icon="star-o" text="已收藏" />
-      <van-action-bar-button type="warning" text="加入购物车" />
+      <van-action-bar-icon icon="shop-o" text="品牌" @click="toBrand(goodStore.good.brand.name)" />
+      <van-action-bar-icon icon="star-o" text="收藏" />
+      <van-action-bar-button type="warning" text="加入购物车" @click="addshopping" />
       <van-action-bar-button type="danger" text="立即购买" />
     </van-action-bar>
   </div>
