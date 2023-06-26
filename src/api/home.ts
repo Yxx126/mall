@@ -26,7 +26,7 @@ interface resData<T> {
     message: string,
   }
 }
-type loginData = {id:number, url:string}[]
+type loginData = {id:number, url:string, good_id:number}[]
 type homeNavData = {id:number, name:string, url:string}[]
 type homeFloorData = {id:number, name:string, desc:string, url:string}[]
 type brandData = {id:number, name:string, count:number, url:string, top_url:string, sale:string}[]

@@ -3,12 +3,14 @@
   import { useRouter } from 'vue-router';
   import { useUserinfoStore } from '@/stores/user';
   import { useShopStore } from '@/stores/shop';
+  import { useStarStore } from '@/stores/star';
   import { showFailToast } from 'vant'
   import 'vant/es/toast/style'
 
   const router = useRouter()
   const userinfoStore = useUserinfoStore()
   const shopStore = useShopStore()
+  const starStore = useStarStore()
 
   onBeforeMount(() => {
     userLogin.username.value = ''
@@ -70,6 +72,7 @@
   const loginHandler = async (e:From) => {
     await userinfoStore.getLogin(e)
     await shopStore.getshopping()
+    await starStore.getstar()
   }
   // 注册函数
   const reguserHandler = async (e:From) => {

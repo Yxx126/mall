@@ -3,11 +3,15 @@
 <script setup lang='ts'>
   import { useRouter } from 'vue-router';
   import { useUserinfoStore } from '@/stores/user';
+  import { useShopStore } from '@/stores/shop';
+  import { useStarStore } from '@/stores/star';
   import Cookies from 'js-cookie';
   import { showSuccessToast } from 'vant';
 
   const router = useRouter()
   const userinfoStore = useUserinfoStore()
+  const shopStore = useShopStore()
+  const starStore = useStarStore()
 
   const toLogin = () => {
     router.push({ name: 'login' })
@@ -16,10 +20,15 @@
   const signout = () => {
     Cookies.set('token', '')
     userinfoStore.userinfo = {}
+    shopStore.shopCart = []
+    starStore.goodStar = []
     showSuccessToast('退出登录成功！')
   }
   const toAddress = () => {
     router.push({name: 'addresslist'})
+  }
+  const toStar = () => {
+    router.push({name: 'star'})
   }
 </script>
 
@@ -83,7 +92,7 @@
                 <van-icon name="arrow" class="box3-item-right-icon" />
               </div>
             </div>
-            <div class="box3-item">
+            <div class="box3-item" @click="toStar">
               <van-icon name="star" class="box3-item-icon" />
               <div class="box3-item-right">
                 <p>我的收藏</p>

@@ -63,11 +63,16 @@ const router = createRouter({
       name: 'address',
       component: () => import('../views/AddressView.vue')
     },
+    {
+      path: '/star',
+      name: 'star',
+      component: () => import('../views/StarView.vue')
+    },
   ]
 })
 
 router.beforeEach((to, from, next) => {
-  window.scrollTo(0, 0)
+  // window.scrollTo(0, 0)
   next()
 })
 

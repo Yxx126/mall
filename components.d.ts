@@ -24,7 +24,6 @@ declare module 'vue' {
     VanActionBar: typeof import('vant/es')['ActionBar']
     VanActionBarButton: typeof import('vant/es')['ActionBarButton']
     VanActionBarIcon: typeof import('vant/es')['ActionBarIcon']
-    VanAddressEdit: typeof import('vant/es')['AddressEdit']
     VanAddressList: typeof import('vant/es')['AddressList']
     VanButton: typeof import('vant/es')['Button']
     VanCell: typeof import('vant/es')['Cell']
@@ -46,8 +45,10 @@ declare module 'vue' {
     VanSwipe: typeof import('vant/es')['Swipe']
     VanSwipeCell: typeof import('vant/es')['SwipeCell']
     VanSwipeItem: typeof import('vant/es')['SwipeItem']
+    VanTab: typeof import('vant/es')['Tab']
     VanTabbar: typeof import('vant/es')['Tabbar']
     VanTabbarItem: typeof import('vant/es')['TabbarItem']
+    VanTabs: typeof import('vant/es')['Tabs']
     VanTextEllipsis: typeof import('vant/es')['TextEllipsis']
   }
 }

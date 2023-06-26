@@ -32,7 +32,7 @@ export const useGoodStore = defineStore('good', {
     // 获取商品详情
     async getGooddetail(id:number) {
       const { data: res } = await getGooddetailApi({id: id})
-      if(res.code !== 200) return showFailToast(res.message);
+      if(res.code !== 200) return showFailToast(res.message);      
       this.good = res.data
       this.good_type = {}
       for(const key in res.data.type) {

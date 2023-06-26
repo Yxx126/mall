@@ -42,10 +42,10 @@
       background-color: #fff;
 
       img {
+        object-fit: contain;
         box-sizing: border-box;
         width: 100%;
         height: 75px;
-        padding: 10px 0;
       }
       .name {
         line-height: 40px;

@@ -13,6 +13,7 @@
   import 'swiper/css/navigation';
   import 'swiper/css/pagination';
   import 'swiper/css/scrollbar';
+import router from '@/router';
 
   const modules = [Pagination, A11y, Autoplay]
   const homeStore = useHomeStore()
@@ -25,6 +26,14 @@
   const onSlideChange = (e: swiper) => {
     if(e.realIndex % 2 === 0) bgc.value='#fff'
     if(e.realIndex % 2 !== 0) bgc.value='red'
+  }
+  const toGooddetail = (id:number) => {
+    router.push({
+      name: 'gooddetail',
+      query: {
+        good_id: id,
+      }
+    })
   }
 </script>
 
@@ -40,7 +49,7 @@
     :style="{ backgroundColor: bgc }"
   >
     <swiper-slide v-for="item in homeStore.banner" :key="item.id">
-      <img :src="item.url">
+      <img :src="item.url" @click.stop="toGooddetail(item.good_id)">
     </swiper-slide>
   </swiper>
 </template>

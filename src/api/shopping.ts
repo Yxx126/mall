@@ -16,6 +16,7 @@ type addshopping = {
   good_url: string,
   good_price: number,
   good_count: number,
+  inventory: number,
   disposition: string,
 }
 type delshopping = {

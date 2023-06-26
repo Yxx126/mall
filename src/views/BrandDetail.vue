@@ -19,7 +19,7 @@
     // 获取品牌详情
     homeStore.getBrandDetail(route.query.name)
     // 获取品牌的商品数据
-    homeStore.getBrandGoodlist(route.query.name, 6, false)
+    homeStore.getBrandGoodlist(route.query.name, 6, false)    
   })
 
   
@@ -28,9 +28,6 @@
   const refreshing = ref(false);
   // 上拉加载
   const onLoad = () => {    
-    // if(finished.value) return false
-    // if(loading.value) return false
-    // loading.value = true
     let timer
     let res
     clearTimeout(timer)
@@ -67,9 +64,9 @@
   <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
     <div class="brand-container">
       <!-- 图片 -->
-      <img style="width: 100vw; object-fit: cover;" :src="homeStore.branddetail.top_url" />
+      <img style="width: 100vw; object-fit: cover; margin-bottom: 10px;" :src="homeStore.branddetail.top_url" />
       <!-- 品牌信息 -->
-      <brand-desc :show_name="false" />
+      <brand-desc :show_name="false" :tobrand="false" :obj="homeStore.branddetail" />
       <!-- 品牌故事 -->
       <div class="brand-tale">
         <div>品牌故事</div>
@@ -92,6 +89,7 @@
 
 <style lang='less' scoped>
   .brand-container {
+    height: 100vh;
     margin-top: 46px;
 
     .brand-tale {

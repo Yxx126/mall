@@ -4,7 +4,6 @@
   import { useRouter } from 'vue-router';
   import { ref, onBeforeMount } from 'vue';
   import { useGoodStore } from '@/stores/good';
-import { availableParallelism } from 'os';
 
   const  goodStore = useGoodStore()
   const  router = useRouter()
@@ -136,13 +135,14 @@ import { availableParallelism } from 'os';
     }
     .sugg-history-item {
       display: flex;
+      flex-wrap: wrap;
       flex-direction: row-reverse;
       justify-content: flex-end;
       align-items: center;
 
       span {
         padding: 7px 15px;
-        margin-right: 10px;
+        margin: 5px;
         background-color: #fff;
         border-radius: 5px;
         font-size: 13px;

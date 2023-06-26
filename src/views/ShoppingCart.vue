@@ -15,7 +15,7 @@
     router.push({ name: 'login' })
   }
 
-  onBeforeMount(async () => {
+  onBeforeMount(() => {
     checked.value = shopStore.shopCart.every(item => item.checkout)
   })
 

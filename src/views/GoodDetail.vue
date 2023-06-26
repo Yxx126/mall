@@ -5,6 +5,7 @@
   import { useRouter, useRoute } from 'vue-router';
   import { useGoodStore } from '@/stores/good';
   import { useShopStore } from '@/stores/shop';
+  import { useStarStore } from '@/stores/star';
   import { useUserinfoStore } from '@/stores/user';
   import { showImagePreview } from 'vant';
   import BrandDesc from '@/components/brand/BrandDesc.vue'; // 品牌信息组件
@@ -13,6 +14,7 @@
   const route = useRoute()
   const goodStore = useGoodStore()
   const shopStore = useShopStore()
+  const starStore = useStarStore()
   const userinfoStore = useUserinfoStore()
 
   const onClickLeft = () => {
@@ -29,9 +31,25 @@
   onBeforeMount(async () => {
     const list = goodStore.good_type
     list['id'] = route.query.good_id
+    // 获取商品详情
     await goodStore.getGooddetail(route.query.good_id)
+    // 获取库存信息
     await goodStore.getGoodInventory(route.query.good_id)
+    // 增加浏览量
     await goodStore.addViews(route.query.good_id)
+    // 判断该商品是否被收藏
+    const res = await starStore.selectGoodStar(route.query.good_id)
+    if(res.code === 200) {
+      star.icon.value = 'star'
+      star.color.value = '#fa436a'
+      star.text.value = '已收藏'
+    }
+    if(res.code === 201) {
+      star.icon.value = 'star-o'
+      star.color.value = '#000'
+      star.text.value = '收藏'
+    }
+
     images.value = goodStore.good.good_url.split(',')
     goodStore.getGoodInv(typeKey)
     goodStore.good_addprice = 0
@@ -78,22 +96,22 @@
   const show_parameter = ref(false);
   const showPopup = (name:string) => {
     showName.value = name
-    show_parameter.value = true;    
+    show_parameter.value = true    
   }
 
   // 更改商品所选类型
   const updateType = (item:string, index:number) => {
     goodStore.selected_good_type[index] = item
-    goodStore.getGoodInv(typeKey)
+    goodStore.getGoodInv(typeKey)    
   }  
   
   // 加入购物车
-  const addshopping = () => {
+  const addshopping = async () => {
     let str1 = ''
     for(const key in goodStore.selected_good_type) {
       str1 = str1 + goodStore.selected_good_type[key] + ' '
     }
-    shopStore.addshopping({
+    await shopStore.addshopping({
       user_id: userinfoStore.userinfo.id,
       good_id: goodStore.good.id,
       good_name: goodStore.good.good_name,
@@ -101,10 +119,47 @@
       good_url: goodStore.good.good_url.split(',')[0],
       good_price: goodStore.good_price,
       good_count: 1,
+      inventory: goodStore.good_inv.inventory,
       disposition: str1,
     })
-    shopStore.getshopping()
+    await shopStore.getshopping()
   }
+  // 收藏样式
+  const star = {
+    icon: ref('star-o'),
+    color: ref('#000'),
+    text: ref('收藏'),
+  }
+  // 收藏
+  const addstar = async () => {
+    let str1 = ''
+    for(const key in goodStore.selected_good_type) {
+      str1 = str1 + goodStore.selected_good_type[key] + ' '
+    }
+    const res = await starStore.addstar({
+      user_id: userinfoStore.userinfo.id,
+      good_id: goodStore.good.id,
+      good_name: goodStore.good.good_name,
+      good_desc: goodStore.good.good_desc,
+      good_url: goodStore.good.good_url.split(',')[0],
+      good_price: goodStore.good_price,
+      good_count: 1,
+      inventory: goodStore.good_inv.inventory,
+      disposition: str1,
+    })
+    if(res.message === '收藏成功！') {
+      star.icon.value = 'star'
+      star.color.value = '#fa436a'
+      star.text.value = '已收藏'
+    }
+    if(res.message === '取消收藏！') {
+      star.icon.value = 'star-o'
+      star.color.value = '#000'
+      star.text.value = '收藏'
+    }
+    await starStore.getstar()
+  }
+
   // 跳转到品牌详情
   const toBrand = (name:string) => {
     router.push({
@@ -205,7 +260,7 @@
       </van-popup>
 
       <!-- 品牌信息组件 -->
-      <brand-desc />
+      <brand-desc :show_icon="false" :obj="goodStore.good.brand" />
     </main>
 
     <footer>
@@ -216,9 +271,9 @@
     </footer>
 
     <van-action-bar style="height: 50px;">
-      <van-action-bar-icon icon="shop-o" text="品牌" @click="toBrand(goodStore.good.brand.name)" />
-      <van-action-bar-icon icon="star-o" text="收藏" />
-      <van-action-bar-button type="warning" text="加入购物车" @click="addshopping" />
+      <van-action-bar-icon icon="shop-o" text="品牌" @click.stop="toBrand(goodStore.good.brand.name)" />
+      <van-action-bar-icon :icon="star.icon.value" :text="star.text.value" @click.stop="addstar" :color="star.color.value" />
+      <van-action-bar-button type="warning" text="加入购物车" @click.stop="addshopping" />
       <van-action-bar-button type="danger" text="立即购买" />
     </van-action-bar>
   </div>

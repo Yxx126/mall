@@ -1,28 +1,88 @@
 <!-- 品牌信息组件 -->
 
 <script setup lang='ts'>
-  import { useGoodStore } from '@/stores/good';
+  import { ref, onBeforeMount } from 'vue';
+  import { useRouter } from 'vue-router';
+  import { useHomeStore } from '@/stores/home';
+  import { useStarStore } from '@/stores/star';
 
-  const goodStore = useGoodStore()
+  const router = useRouter()
+  const homeStore = useHomeStore()
+  const starStore = useStarStore()
   const props = defineProps({
     show_name: {
       type: Boolean,
       default: true,
+    },
+    show_icon: {
+      type: Boolean,
+      default: true,
+    },
+    tobrand: {
+      type: Boolean,
+      default: true,
+    },
+    obj: {
+      type: Object,
+      default: () => {
+        return {
+          url: String,
+          brand: '品牌名称',
+          name: '品牌名称',
+          letter: '品牌首字母',
+        }
+      },
     }
   })
+
+  // 收藏样式
+  const star = {
+    color: ref('#606266'),
+  }
+  onBeforeMount(async () => {
+    // 判断该品牌是否被收藏    
+    const res = await starStore.selectBrandStar(props.obj.brand||props.obj.name)
+    if(res.code === 200) star.color.value = '#fa436a'
+    if(res.code === 201) star.color.value = '#606266'
+  })
+  // 跳转到品牌详情
+  const toBrand = () => {
+    router.push({
+      name: 'branddetail',
+      query: {
+        name: homeStore.branddetail.name,
+      }
+    })
+  }
+  // 点击收藏
+  const updateStar = async () => {
+    const res = await starStore.addBrand({
+      brand: props.obj.brand||props.obj.name,
+      url: props.obj.url,
+      letter: props.obj.letter,
+    })
+    if(res.message === '收藏成功！') star.color.value = '#fa436a'
+    if(res.message === '取消收藏！') star.color.value = '#606266'
+    await starStore.getbrandStar()
+  }
 </script>
 
 <template>
   <div class="gooddetail-main-brand">
     <div v-if="props.show_name" class="main-brand-name">品牌信息</div>
     <div class="main-brand-main">
-      <img style="width: 105px; height: 35px;" :src="goodStore.good.brand.url">
-      <div class="main-brand-main-left">
-        <span>{{ goodStore.good.brand.name }}</span>
-        <span>品牌首字母: {{ goodStore.good.brand.letter }}</span>
+      <img v-if="props.tobrand" style="width: 105px; height: 35px; object-fit: contain;" @click="toBrand" :src="props.obj.url">
+      <img v-else style="width: 105px; height: 35px; object-fit: contain;" :src="props.obj.url">
+      <div v-if="props.tobrand" class="main-brand-main-left" @click="toBrand">
+        <span>{{ props.obj.brand }}</span>
+        <span>品牌首字母: {{ props.obj.letter }}</span>
       </div>
-      <div class="main-brand-main-right">
-        <van-icon name="star" size="40" color="#606266" />
+      <div v-else class="main-brand-main-left">
+        <span>{{ props.obj.name }}</span>
+        <span>品牌首字母: {{ props.obj.letter }}</span>
+      </div>
+      <div v-if="props.show_icon" class="main-brand-main-right">
+        <van-icon name="like" size="40" :color="star.color.value" @click.stop="updateStar" />
       </div>
     </div>
   </div>
@@ -30,8 +90,8 @@
 
 <style lang='less' scoped>
   .gooddetail-main-brand{
-    margin-top: 10px;
     background-color: #fff;
+    border-bottom: 1px solid #ccc;
 
     .main-brand-name {
       height: 40px;
