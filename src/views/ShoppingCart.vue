@@ -60,7 +60,12 @@
 <template>
   <div class="shopping-container">
     <div v-if="!Cookies.get('token')">
-      <button @click.stop="toLogin">点击登录</button>
+      <van-nav-bar
+        title="购物车"
+        fixed
+      />
+      <div style="font-size: 15px; color: #606266; text-align: center; margin-top: 96px; margin-bottom: 20px;">暂未登录，请点击登录</div>
+      <van-button @click.stop="toLogin" round block style="width: 90%; margin: 0 auto;" type="primary">点击登录</van-button>
     </div>
 
     <div v-else class="show-shopping">

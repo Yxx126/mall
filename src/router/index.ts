@@ -68,6 +68,21 @@ const router = createRouter({
       name: 'star',
       component: () => import('../views/StarView.vue')
     },
+    {
+      path: '/setup',
+      name: 'setup',
+      component: () => import('../views/SetUp.vue')
+    },
+    {
+      path: '/updatepwd',
+      name: 'updatepwd',
+      component: () => import('../views/UpdatePwd.vue')
+    },
+    {
+      path: '/userimg',
+      name: 'userimg',
+      component: () => import('../views/UserImg.vue')
+    },
   ]
 })
 

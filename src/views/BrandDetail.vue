@@ -89,7 +89,6 @@
 
 <style lang='less' scoped>
   .brand-container {
-    height: 100vh;
     margin-top: 46px;
 
     .brand-tale {

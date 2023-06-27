@@ -15,7 +15,6 @@ axios.interceptors.request.use(function (config) {
   // }  
   // const token = Cookies.get('token')
   // if(token) {
-    // config.headers['Content-Type'] = 'application/x-www-form-urlencoded'
     // config.headers['Authorization'] = token
   // }
   // console.log(config);

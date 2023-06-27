@@ -3,26 +3,14 @@
 <script setup lang='ts'>
   import { useRouter } from 'vue-router';
   import { useUserinfoStore } from '@/stores/user';
-  import { useShopStore } from '@/stores/shop';
-  import { useStarStore } from '@/stores/star';
   import Cookies from 'js-cookie';
-  import { showSuccessToast } from 'vant';
+  import { showImagePreview } from 'vant'
 
   const router = useRouter()
   const userinfoStore = useUserinfoStore()
-  const shopStore = useShopStore()
-  const starStore = useStarStore()
 
   const toLogin = () => {
     router.push({ name: 'login' })
-  }
-  // 退出登录
-  const signout = () => {
-    Cookies.set('token', '')
-    userinfoStore.userinfo = {}
-    shopStore.shopCart = []
-    starStore.goodStar = []
-    showSuccessToast('退出登录成功！')
   }
   const toAddress = () => {
     router.push({name: 'addresslist'})
@@ -30,18 +18,33 @@
   const toStar = () => {
     router.push({name: 'star'})
   }
+  const toSetup = () => {
+    router.push({name: 'setup'})
+  }
+  // 预览头像
+  const preview = (img:string) => {
+    showImagePreview({
+      images: [img],
+      showIndex:false,
+    })
+  }
 </script>
 
 <template>
   <div class="my-container">
     <div v-if="!Cookies.get('token')">
-      <button @click.stop="toLogin">点击登录</button>
+      <van-nav-bar
+        title="我的"
+        fixed
+      />
+      <div style="font-size: 15px; color: #606266; text-align: center; margin-top: 96px; margin-bottom: 20px;">暂未登录，请点击登录</div>
+      <van-button @click.stop="toLogin" round block style="width: 90%; margin: 0 auto;" type="primary">点击登录</van-button>
     </div>
 
     <div v-else>
       <div class="my-login">
         <div class="my-title">
-          <img src="">
+          <img :src="userinfoStore.userinfo.img" @click.stop="preview(userinfoStore.userinfo.img)">
           <div>{{ userinfoStore.userinfo.nickname }}</div>
         </div>
         <main>
@@ -78,7 +81,7 @@
             </div>
           </div>
           <div class="box3">
-            <div class="box3-item" @click="toAddress">
+            <div class="box3-item" @click.stop="toAddress">
               <van-icon name="location" class="box3-item-icon" />
               <div class="box3-item-right">
                 <p>地址管理</p>
@@ -99,17 +102,10 @@
                 <van-icon name="arrow" class="box3-item-right-icon" />
               </div>
             </div>
-            <div class="box3-item">
+            <div class="box3-item" @click="toSetup">
               <van-icon name="setting" class="box3-item-icon" />
               <div class="box3-item-right">
                 <p>设置</p>
-                <van-icon name="arrow" class="box3-item-right-icon" />
-              </div>
-            </div>
-            <div class="box3-item" @click="signout">
-              <van-icon name="down" class="box3-item-icon" />
-              <div class="box3-item-right">
-                <p>退出登录</p>
                 <van-icon name="arrow" class="box3-item-right-icon" />
               </div>
             </div>
@@ -140,7 +136,6 @@
         img {
           width: 62px;
           height: 62px;
-          border: 1px solid red;
           border-radius: 50%;
           background-color: #fff;
         }

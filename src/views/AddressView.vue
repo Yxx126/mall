@@ -66,6 +66,7 @@
 
     // 修改地址
     if(route.query.index) {
+      if(shopStore.addresslist.length === 1) e.isDefault = true
       const ress = {
         id: shopStore.addresslist[route.query.index].id,
         name: e.name,

@@ -3,11 +3,9 @@
 <script setup lang='ts'>
   import { ref, onBeforeMount } from 'vue';
   import { useRouter } from 'vue-router';
-  import { useHomeStore } from '@/stores/home';
   import { useStarStore } from '@/stores/star';
 
   const router = useRouter()
-  const homeStore = useHomeStore()
   const starStore = useStarStore()
   const props = defineProps({
     show_name: {
@@ -50,7 +48,7 @@
     router.push({
       name: 'branddetail',
       query: {
-        name: homeStore.branddetail.name,
+        name: props.obj.brand,
       }
     })
   }
