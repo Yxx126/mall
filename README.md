@@ -46,34 +46,34 @@ npm run lint
 ```
 
 ### 图片展示
-首页
+首页  
 ![Alt text](image.png)
 
-分类
+分类  
 ![Alt text](image-1.png)
 
-购物车
+购物车  
 ![Alt text](image-2.png)
 
-我的
+我的  
 ![Alt text](image-3.png)
 
-搜索
+搜索  
 ![Alt text](image-4.png)
 
-商品列表
+商品列表  
 ![Alt text](image-5.png)
 ![Alt text](image-6.png)
 
-商品详情
+商品详情  
 ![Alt text](image-7.png)
 
-品牌详情
+品牌详情  
 ![Alt text](image-8.png)
 
-收货地址
+收货地址  
 ![Alt text](image-9.png)
 ![Alt text](image-10.png)
 
-收藏
+收藏  
 ![Alt text](image-11.png)
