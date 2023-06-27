@@ -57,11 +57,6 @@ export const useUserinfoStore = defineStore('userinfo', {
         this.getUserinfo()
       }
     },
-    // blob转图片
-    blobimg(blob:Blob) {      
-      const img = URL.createObjectURL(blob)
-      return img
-    },
     // 修改用户信息
     async updateinfo(params:updateinfo) {
       const { data: res } = await updateinfoApi(params)

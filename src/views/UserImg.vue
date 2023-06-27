@@ -7,7 +7,6 @@
   import { showImagePreview } from 'vant'
   import { VueCropper }  from 'vue-cropper' // 图片裁剪
   import 'vue-cropper/dist/index.css'
-import axios from 'axios';
 
   const router = useRouter()
   const userinfoStore = useUserinfoStore()
@@ -70,9 +69,12 @@ import axios from 'axios';
   }
   // 上传头像
   const onSubmitImg = () => {
-    cropper.value.getCropBlob(async (data:Blob) => {      
-      const img = userinfoStore.blobimg(data)
-      await userinfoStore.updateimg(img)
+    cropper.value.getCropData(async (data) => {
+      // console.log(data);
+      
+      // const img = URL.createObjectURL(data)
+      await userinfoStore.updateimg(data)
+      userinfoStore.getUserinfo()
       imgshow.value = false
       cropper.value.clearCrop()
     })  
@@ -174,10 +176,6 @@ import axios from 'axios';
           style="width: 100%; height: 100%;"
         ></vue-cropper>
       </div>
-
-      <!-- 预览 -->
-      <img src="" alt="">
-      
       <!-- 上传按钮 -->
       <div style="margin: 16px 16px 0; display: flex; justify-content: space-between;">
         <van-button round block type="primary" native-type="submit" style="margin-bottom: 10px; margin-right: 10px;">上传</van-button>
