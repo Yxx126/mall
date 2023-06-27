@@ -70,9 +70,6 @@
   // 上传头像
   const onSubmitImg = () => {
     cropper.value.getCropData(async (data) => {
-      // console.log(data);
-      
-      // const img = URL.createObjectURL(data)
       await userinfoStore.updateimg(data)
       userinfoStore.getUserinfo()
       imgshow.value = false
