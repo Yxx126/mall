@@ -13,6 +13,7 @@ export const useClassifyStore = defineStore('classify', {
       twoList: Array<classifyTwoData[]>(),
       goodlist: Array<goodlistData>(),
       RightHeight: 180,
+      RightItemHeight: 90,
     }
   },
   getters: {

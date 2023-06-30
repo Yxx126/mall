@@ -3,7 +3,6 @@
 <script setup lang='ts'>
   import { useRouter } from 'vue-router';
   import { useUserinfoStore } from '@/stores/user';
-  import Cookies from 'js-cookie';
   import { showImagePreview } from 'vant'
 
   const router = useRouter()
@@ -27,12 +26,12 @@
       images: [img],
       showIndex:false,
     })
-  }
+  }  
 </script>
 
 <template>
   <div class="my-container">
-    <div v-if="!Cookies.get('token')">
+    <div v-if="userinfoStore.token===''||undefined">
       <van-nav-bar
         title="我的"
         fixed

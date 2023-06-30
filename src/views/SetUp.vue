@@ -5,7 +5,6 @@
   import { useUserinfoStore } from '@/stores/user';
   import { useShopStore } from '@/stores/shop';
   import { useStarStore } from '@/stores/star';
-  import Cookies from 'js-cookie';
 
   import { showSuccessToast } from 'vant';
 
@@ -26,7 +25,7 @@
   }
   // 退出登录
   const signout = () => {
-    Cookies.set('token', '')
+    userinfoStore.token = ''
     userinfoStore.userinfo = {}
     shopStore.shopCart = []
     starStore.goodStar = []

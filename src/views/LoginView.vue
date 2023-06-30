@@ -90,6 +90,7 @@
     :title="title"
     fixed
     @click-left="onClickLeft"
+    style="height: 6.9vh;"
   />
 
   <div class="bgi">
@@ -163,7 +164,7 @@
 <style lang='less' scoped>
   .bgi {
     width: 100vw;
-    height: 621px;
+    height: 93.1vh;
     padding-top: 46px;
     background: url('../assets/images//login.jpg');
     background-size: cover;

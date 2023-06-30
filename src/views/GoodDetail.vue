@@ -9,6 +9,7 @@
   import { useUserinfoStore } from '@/stores/user';
   import { showImagePreview } from 'vant';
   import BrandDesc from '@/components/brand/BrandDesc.vue'; // 品牌信息组件
+  import { showToast  } from 'vant'
 
   const router = useRouter()
   const route = useRoute()
@@ -169,6 +170,10 @@
       }
     })
   }
+  // 立即购买
+  const buy = () => {
+    showToast ('点击了立即购买！')
+  }
 </script>
 
 <template>
@@ -180,9 +185,9 @@
   />
   <div class="gooddetail-container">
     <header>
-      <van-swipe lazy-render width="375" height="361" indicator-color="#000" :swipeTo="swipeIndex" @drag-end="updateIndex" :initial-swipe="swipeIndex">
+      <van-swipe lazy-render style="width: 100vw;" indicator-color="#000" :swipeTo="swipeIndex" @drag-end="updateIndex" :initial-swipe="swipeIndex">
         <van-swipe-item v-for="image in images" :key="image">
-          <img style="width: 375px; height: 361px;" :src="image" @click="look" />
+          <img style="width: 100vw;" :src="image" @click="look" />
         </van-swipe-item>
       </van-swipe>
       <van-image-preview v-model:show="show" :images="images">
@@ -274,7 +279,7 @@
       <van-action-bar-icon icon="shop-o" text="品牌" @click.stop="toBrand(goodStore.good.brand.name)" />
       <van-action-bar-icon :icon="star.icon.value" :text="star.text.value" @click.stop="addstar" :color="star.color.value" />
       <van-action-bar-button type="warning" text="加入购物车" @click.stop="addshopping" />
-      <van-action-bar-button type="danger" text="立即购买" />
+      <van-action-bar-button type="danger" text="立即购买" @click="buy" />
     </van-action-bar>
   </div>
 </template>
@@ -458,6 +463,13 @@
       background-color: #fff;
       font-size: 15px;
       color: #303133;
+    }
+    .gooddetail-footer-main {
+      width: 100vw;
+
+      img {
+        width: 100%!important;
+      }
     }
   }
 

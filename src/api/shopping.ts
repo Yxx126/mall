@@ -1,12 +1,11 @@
 import $http from './index';
-import Cookies from 'js-cookie';
 
 // 加入购物车
-export const addShoppingApi = (data:addshopping) => $http('/my/shopping/addshopping', {params:data, headers:{Authorization:Cookies.get('token')}})
+export const addShoppingApi = (data:addshopping) => $http('/my/shopping/addshopping', {params:data, headers:{Authorization:localStorage.getItem('token')}})
 // 获取购物车数据
-export const getShoppingApi = () => $http('/my/shopping/getshopping', {headers:{Authorization:Cookies.get('token')}})
+export const getShoppingApi = () => $http('/my/shopping/getshopping', {headers:{Authorization:localStorage.getItem('token')}})
 // 删除购物车数据
-export const delShoppingApi = (data:delshopping) => $http('/my/shopping/delshopping', {params:data, headers:{Authorization:Cookies.get('token')}})
+export const delShoppingApi = (data:delshopping) => $http('/my/shopping/delshopping', {params:data, headers:{Authorization:localStorage.getItem('token')}})
 
 type addshopping = {
   user_id: number,

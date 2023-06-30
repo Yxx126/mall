@@ -8,7 +8,6 @@
   const oneHandler = async (id:number) => {
     classifyStore.activeIndex = id
   }
-  
 </script>
 
 <template>
@@ -21,8 +20,9 @@
 
 <style lang='less' scoped>
   .classify-left-container {
+    @h: (574/667*100vh);
     width: 100px;
-    height: 573px;
+    height: @h;
     background-color: #fff;
 
     ul {

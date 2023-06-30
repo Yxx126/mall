@@ -3,6 +3,7 @@
 <script setup lang='ts'>
   import { useClassifyStore } from '@/stores/classify';
   import { useRouter } from 'vue-router';
+  import { ref, watchEffect } from 'vue';
 
   const classifyStore = useClassifyStore()
   const router = useRouter()
@@ -15,10 +16,17 @@
       }
     })
   }
+
+  const rightRef = ref()
+  watchEffect(() => {
+    if(rightRef.value?.clientWidth/3===undefined) return false
+    const aaa = rightRef.value?.clientWidth/3
+    classifyStore.RightItemHeight = aaa
+  })
 </script>
 
 <template>
-  <div class="classify-right-container" :style="{ height: `${classifyStore.RightHeight}px`}">
+  <div ref="rightRef" class="classify-right-container" :style="{ height: `${classifyStore.RightHeight/667*100}vh`}">
     <div class="classify-right-item" v-for="item in classifyStore.twoList[classifyStore.activeIndex-1]" :key="item.id" @click="toGoodlistHandler(item.id)">
       <img v-lazy="item.url">
       <div class="classify-right-item">{{ item.name }}</div>
@@ -30,7 +38,6 @@
   .classify-right-container {
     display: flex;
     flex-wrap: wrap;
-    height: 200px;
     margin-left: 10px;
     margin-top: 10px;
     padding: 10px 0;

@@ -1,21 +1,21 @@
 import axios from 'axios';
-// import Cookies from 'js-cookie';
+// import { useUserinfoStore } from '@/stores/user';
+
+// const userinfoStore = useUserinfoStore()
 
 const request = axios.create({
-  baseURL: 'http://localhost:4002',
-  // headers: {
-  //   Authorization: Cookies.get('token')
-  // }
+  // baseURL: 'http://39.108.79.1:4002',
+  baseURL: import.meta.env.VITE_HTTP,
 })
 
 // 添加请求拦截器
-axios.interceptors.request.use(function (config) {
+axios.interceptors.request.use(function (config) {  
   // if(config.method==='get') {
     // config.data = { unused: 0 }
   // }  
-  // const token = Cookies.get('token')
+  // const token = userinfoStore.token
   // if(token) {
-    // config.headers['Authorization'] = token
+  //   config.headers['Authorization'] = token
   // }
   // console.log(config);
   

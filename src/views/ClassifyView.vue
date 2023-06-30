@@ -29,7 +29,7 @@
 
   watchEffect(() => {
     if(classifyStore.twoList[classifyStore.activeIndex-1]===undefined) return false
-    const aaa = Math.ceil(classifyStore.twoList[classifyStore.activeIndex-1].length/3)*90  
+    const aaa = Math.ceil(classifyStore.twoList[classifyStore.activeIndex-1].length/3)*(classifyStore.RightItemHeight)
     classifyStore.RightHeight = aaa
   })
 </script>
@@ -42,7 +42,7 @@
     />
     <div class="classify-main">
       <classify-left />
-      <classify-right />
+      <classify-right ref="rightRefs" />
     </div>
   </div>
 

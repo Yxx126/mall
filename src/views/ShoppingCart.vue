@@ -4,12 +4,14 @@
   import { ref, onBeforeMount } from 'vue';
   import { useRouter } from 'vue-router';
   import { useShopStore } from '@/stores/shop';
+  import { useUserinfoStore } from '@/stores/user';
   import { showFailToast } from 'vant';
-  import Cookies from 'js-cookie';
   import TabbarView from '@/components/tabbar/TabbarView.vue';
+  import { showToast } from 'vant';
 
   const router = useRouter()
   const shopStore = useShopStore()
+  const userinfoStore = useUserinfoStore()
 
   const toLogin = () => {
     router.push({ name: 'login' })
@@ -29,7 +31,7 @@
     // 收货地址为空
     if(shopStore.addresslist.length === 0) return router.push({name: 'addresslist'})
     // 跳转支付页面
-    console.log('跳转支付页面');
+    showToast ('跳转支付页面!')
   }
   // 删除购物车数据
   const delItem = async (id:number) => {
@@ -59,7 +61,7 @@
 
 <template>
   <div class="shopping-container">
-    <div v-if="!Cookies.get('token')">
+    <div v-if="userinfoStore.token===''||undefined">
       <van-nav-bar
         title="购物车"
         fixed
@@ -105,7 +107,7 @@
       <div style="margin-top: 10px; font-size: 13px; color: #606266; text-align: center;" v-else>购物车为空，请添加商品！</div>
 
       <!-- 立即购买模块 -->
-      <van-submit-bar style="margin-bottom: 50px; border-bottom: 1px solid #ccc;" :price="shopStore.addPrice" button-text="提交订单" @submit="onSubmit">
+      <van-submit-bar style="transform: translateY(-100%); border-bottom: 1px solid #ccc;" :price="shopStore.addPrice" button-text="提交订单" @submit="onSubmit">
         <van-checkbox v-model="checked" @click="allChk">全选</van-checkbox>
       </van-submit-bar>
 

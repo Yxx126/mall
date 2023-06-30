@@ -69,7 +69,8 @@
   }
   // 上传头像
   const onSubmitImg = () => {
-    cropper.value.getCropData(async (data) => {
+    // cropper.value.getCropBlob(async (data:Blob) => {      
+    cropper.value.getCropData(async (data:string) => {      
       await userinfoStore.updateimg(data)
       userinfoStore.getUserinfo()
       imgshow.value = false
@@ -161,7 +162,7 @@
   >
     <van-form @submit="onSubmitImg">
       <!-- 图片裁剪 -->
-      <div style="width: 300px; height: 300px;">
+      <div class="sql-img">
         <vue-cropper
           ref="cropper"
           :img="option.img.value"
@@ -232,5 +233,10 @@
     left: 5%;
     bottom: 15px;
     width: 90%;
+  }
+
+  .sql-img {
+    width: 300px;
+    height: 300px;
   }
 </style>

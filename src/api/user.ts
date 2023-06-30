@@ -1,17 +1,16 @@
 // 用户信息api
 
 import $http from './index';
-import Cookies from 'js-cookie';
 import qs from 'qs';
 
 // 获取用户信息
-export const getUserinfoApi = ():Promise<resData<userinfo>> => $http.get('/my/user/userinfo', {headers:{Authorization: Cookies.get('token')}})
+export const getUserinfoApi = ():Promise<resData<userinfo>> => $http.get('/my/user/userinfo', {headers:{Authorization: localStorage.getItem('token')}})
 // 修改密码
-export const updatepwdApi = (data:updatepwd):Promise<resData<''>> => $http.post('/my/user/updatepwd', qs.stringify(data), {headers:{Authorization: Cookies.get('token')}})
+export const updatepwdApi = (data:updatepwd):Promise<resData<''>> => $http.post('/my/user/updatepwd', qs.stringify(data), {headers:{Authorization:localStorage.getItem('token')}})
 // 上传头像
-export const updateimgApi = (data:updateimg):Promise<resData<''>> => $http.post('/my/user/userimg', qs.stringify(data), {headers:{Authorization: Cookies.get('token')}})
+export const updateimgApi = (data:updateimg):Promise<resData<''>> => $http.post('/my/user/userimg', qs.stringify(data), {headers:{Authorization:localStorage.getItem('token')}})
 // 修改用户信息
-export const updateinfoApi = (data:updateinfo):Promise<resData<''>> => $http.post('/my/user/updateinfo', qs.stringify(data), {headers:{Authorization: Cookies.get('token')}})
+export const updateinfoApi = (data:updateinfo):Promise<resData<''>> => $http.post('/my/user/updateinfo', qs.stringify(data), {headers:{Authorization:localStorage.getItem('token')}})
 
 type resData<T> = {
   data: {

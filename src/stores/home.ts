@@ -52,8 +52,7 @@ export const useHomeStore = defineStore('home', {
       this.homeFloor = res.data
     },
     // 获取品牌数据
-    async getBrand(count:number=6, flag:boolean=false) {
-      const limit = count
+    async getBrand(limit:number=6, flag:boolean=false) {
       const params = { page: this.brand_page, limit: limit }
       const { data: res } = await getBrandApi(params)
       if(res.code === 201) {

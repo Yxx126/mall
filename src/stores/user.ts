@@ -3,13 +3,14 @@ import { getLoginApi, getReguserApi } from '@/api/login';
 import { getUserinfoApi, updatepwdApi, updateimgApi, updateinfoApi } from '@/api/user';
 import { showSuccessToast, showFailToast } from 'vant'
 import 'vant/es/toast/style'
-import Cookies from 'js-cookie';
 import router from '@/router';
 
 export const useUserinfoStore = defineStore('userinfo', {
   state:() => {
     return {
-      userinfo: Object()
+      userinfo: Object(),
+      userImg: '',
+      token: '',
     }
   },
   getters: {
@@ -18,11 +19,12 @@ export const useUserinfoStore = defineStore('userinfo', {
   actions: {
     // 获取token值
     async getLogin(user:data) {      
-      const { data: res } = await getLoginApi(user)
+      const { data: res } = await getLoginApi(user)      
       if(res.code !== 200) return showFailToast(res.message)
       // 存储toktn值      
       if(res.code === 200) {
-        Cookies.set('token', res.token as string, { expires: 3 })
+        localStorage.setItem('token', res.token as string)
+        this.token = res.token as string
         router.go(-1)
         this.getUserinfo()
       }
@@ -37,7 +39,7 @@ export const useUserinfoStore = defineStore('userinfo', {
     async getUserinfo() {      
       const { data: res } = await getUserinfoApi()
       if(res.code !== 200) return showFailToast(res.message)
-      this.userinfo = res.data      
+      this.userinfo = res.data
     },
     // 修改密码
     async updatePwd(params:updatepwd) {
@@ -50,6 +52,10 @@ export const useUserinfoStore = defineStore('userinfo', {
     },
     // 上传头像
     async updateimg(img:string) {
+      // console.log(img);
+      // const img1 = URL.createObjectURL(img)
+      // console.log(img1);
+
       const { data: res } = await updateimgApi({img:img})      
       if(res.code !== 200) return showFailToast(res.message)
       if(res.code === 200) {

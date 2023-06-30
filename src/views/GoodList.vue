@@ -118,6 +118,7 @@
       fixed
       @click-left="onClickLeft"
       class="goodlist-container-title"
+      style="height: 6.9vh;"  
     />
 
     <div class="goodlist-menu">
@@ -150,7 +151,7 @@
     </van-pull-refresh>
   </div>
 
-  <div class="more-menu" @click.stop.self="hideMenu" :style="{transform: `translateX(${left})`}">
+  <div class="more-menu" @click.stop.self="hideMenu" style="height: 93.1vh;" :style="{transform: `translateX(${left})`}">
     <div class="more-menu-item" v-for="(item, index) in classifyStore.classifyOne" :key="item.id">
       <div class="more-menu-item-name" @click.prevent>{{ item.name }}</div>
       <van-cell :class="it.id==uidActive? 'active': ''" :title="it.name" v-for="it in classifyStore.twoList[index]" :key="it.id" @click.stop="updateMain(it.id)" />
