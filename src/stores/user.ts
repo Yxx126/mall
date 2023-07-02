@@ -27,6 +27,7 @@ export const useUserinfoStore = defineStore('userinfo', {
         this.token = res.token as string
         router.go(-1)
         this.getUserinfo()
+        showSuccessToast(res.message)
       }
     },
     // 注册函数

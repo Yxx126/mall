@@ -1,7 +1,7 @@
 import './assets/main.css';
 import { createApp } from 'vue'
-import pinia from './stores/index';
 
+import pinia from './stores/index';
 import App from './App.vue'
 import router from './router'
 

@@ -6,18 +6,23 @@
   import { useStarStore } from '@/stores/star';
   import { showFailToast } from 'vant'
   import 'vant/es/toast/style'
+  import SlideVerify, { SlideVerifyInstance } from "vue3-slide-verify";
+  import "vue3-slide-verify/dist/style.css"
 
   const router = useRouter()
   const userinfoStore = useUserinfoStore()
   const shopStore = useShopStore()
   const starStore = useStarStore()
 
+  const w = ref(0)
   onBeforeMount(() => {
     userLogin.username.value = ''
     userLogin.password.value = ''
     userReguser.username.value = ''
     userReguser.password.value = ''
     userReguser.confirmPassword.value = ''
+
+    w.value = document.documentElement.clientWidth
   })
 
   const onClickLeft = () => {
@@ -69,10 +74,8 @@
     LeftX.value === 0? LeftX.value = -100: LeftX.value = 0
   }
   // 登录函数
-  const loginHandler = async (e:From) => {
-    await userinfoStore.getLogin(e)
-    await shopStore.getshopping()
-    await starStore.getstar()
+  const loginHandler = async () => {
+    show_slide.value = true
   }
   // 注册函数
   const reguserHandler = async (e:From) => {
@@ -81,6 +84,37 @@
       updateLore()
       showFailToast('注册成功！')
     }
+  }
+
+  // 滑块
+  const show_slide = ref(false)
+  const msg = ref('')
+  const block = ref<SlideVerifyInstance>();
+  const onAgain = () => {
+    msg.value = "检测到非人为操作的哦！ try again";
+    // 刷新
+    block.value?.refresh()    
+  }
+  const onSuccess = async (times: number) => {
+    msg.value = `验证通过, 耗时${(times / 1000).toFixed(1)}s`
+    // 验证通过，登录
+    await userinfoStore.getLogin({
+      username: userLogin.username.value,
+      password: userLogin.password.value
+    })
+    await shopStore.getshopping()
+    await starStore.getstar()
+  }
+  const onFail = () => {
+    msg.value = "验证不通过"
+  }
+  const onRefresh = () => {
+    msg.value = "点击了刷新小图标"
+  }
+  const handleClick = () => {
+    // 刷新
+    block.value?.refresh();
+    msg.value = "";
   }
 </script>
 
@@ -94,7 +128,6 @@
   />
 
   <div class="bgi">
-
     <div class="login-logo">mall商城</div>
 
     <div class="box">
@@ -157,15 +190,33 @@
         <div class="update-lore">已有账号,<p @click.stop.self="updateLore">点击登录</p></div>
       </van-form>
     </div>
+
+    <!-- 滑块 -->
+    <van-popup v-model:show="show_slide" :style="{ padding: '64px' }">
+      <div class="silde_box">
+        <SlideVerify 
+          class="silde_box"
+          ref="block"
+          :slider-text="'向右滑动'"
+          :accuracy="5"
+          :w="w*0.7"
+          @again="onAgain"
+          @success="onSuccess"
+          @fail="onFail"
+          @refresh="onRefresh"
+        ></SlideVerify>
+        <button style="margin: 10px 0;" class="btn" @click="handleClick">点击刷新</button>
+      <div>{{ msg }}</div>
+    </div>
+    </van-popup>
   </div>
-  
 </template>
 
 <style lang='less' scoped>
   .bgi {
     width: 100vw;
     height: 93.1vh;
-    padding-top: 46px;
+    margin-top: 46px;
     background: url('../assets/images//login.jpg');
     background-size: cover;
     text-align: center;
@@ -198,11 +249,14 @@
       }
     }
   }
-  
+
   :deep(.van-icon) {
     color: #000;
   }
   :deep(.van-field) {
     background-color: rgba(255, 255, 255, .5);
+  }
+  :deep(.van-popup) {
+    padding: 64px 30px!important;
   }
 </style>

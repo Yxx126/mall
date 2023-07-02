@@ -7,6 +7,8 @@
   import { showImagePreview } from 'vant'
   import { VueCropper }  from 'vue-cropper' // 图片裁剪
   import 'vue-cropper/dist/index.css'
+  import { showFailToast } from 'vant';
+  import 'vant/es/toast/style'
 
   const router = useRouter()
   const userinfoStore = useUserinfoStore()
@@ -63,9 +65,16 @@
   }
   const lookimg = ref('')
   // 显示上传头像弹出层
-  const afterRead = (file) => {
-    imgshowPopup()
-    lookimg.value = file.content
+  const afterRead = (file:any) => {
+    const type = ['jpg', 'png', 'webp']
+    const imgType = file.file.name.split('.')
+    if(type.indexOf(imgType[imgType.length-1]) === -1) {
+      showFailToast('上传的文件仅限jpg、png、webp格式!')
+    }
+    if(type.indexOf(imgType[imgType.length-1]) !== -1) {
+      imgshowPopup()
+      lookimg.value = file.content    
+    } 
   }
   // 上传头像
   const onSubmitImg = () => {
