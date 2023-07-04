@@ -8,6 +8,7 @@ export const getShoppingApi = () => $http('/my/shopping/getshopping', {headers:{
 export const delShoppingApi = (data:delshopping) => $http('/my/shopping/delshopping', {params:data, headers:{Authorization:localStorage.getItem('token')}})
 
 type addshopping = {
+  sid: number,
   user_id: number,
   good_id: number,
   good_name: string,
@@ -15,6 +16,7 @@ type addshopping = {
   good_url: string,
   good_price: number,
   good_count: number,
+  brand: string,
   inventory: number,
   disposition: string,
 }

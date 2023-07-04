@@ -26,62 +26,72 @@ const router = createRouter({
     {
       path: '/goodlist',
       name: 'goodlist',
-      component: () => import('../views/GoodList.vue')
+      component: () => import('../views/package/GoodList.vue')
     },
     {
       path: '/gooddetail',
       name: 'gooddetail',
-      component: () => import('../views/GoodDetail.vue')
+      component: () => import('../views/package/GoodDetail.vue')
     },
     {
       path: '/branddetail',
       name: 'branddetail',
-      component: () => import('../views/BrandDetail.vue')
+      component: () => import('../views/package/BrandDetail.vue')
     },
     {
       path: '/correlationlist',
       name: 'correlationlist',
-      component: () => import('../views/CorrelationList.vue')
+      component: () => import('../views/package/CorrelationList.vue')
     },
     {
       path: '/login',
       name: 'login',
-      component: () => import('../views/LoginView.vue')
+      component: () => import('../views/package/LoginView.vue')
     },
     {
       path: '/search',
       name: 'search',
-      component: () => import('../views/SearchView.vue')
+      component: () => import('../views/package/SearchView.vue')
     },
     {
       path: '/addresslist',
       name: 'addresslist',
-      component: () => import('../views/AddressList.vue')
+      component: () => import('../views/package/AddressList.vue')
     },
     {
       path: '/address',
       name: 'address',
-      component: () => import('../views/AddressView.vue')
+      component: () => import('../views/package/AddressView.vue')
     },
     {
       path: '/star',
       name: 'star',
-      component: () => import('../views/StarView.vue')
+      component: () => import('../views/package/StarView.vue')
     },
     {
       path: '/setup',
       name: 'setup',
-      component: () => import('../views/SetUp.vue')
+      component: () => import('../views/package/SetUp.vue')
     },
     {
       path: '/updatepwd',
       name: 'updatepwd',
-      component: () => import('../views/UpdatePwd.vue')
+      component: () => import('../views/package/UpdatePwd.vue')
     },
     {
       path: '/userimg',
       name: 'userimg',
-      component: () => import('../views/UserImg.vue')
+      component: () => import('../views/package/UserImg.vue')
+    },
+    {
+      path: '/order',
+      name: 'order',
+      component: () => import('../views/package/OrderView.vue')
+    },
+    {
+      path: '/orderlist',
+      name: 'orderlist',
+      component: () => import('../views/package/OrderList.vue')
     },
   ]
 })

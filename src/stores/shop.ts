@@ -10,6 +10,7 @@ export const useShopStore = defineStore('shop', {
     return {
       // 购物车数据
       shopCart: [],
+      allChecked: false,
       chosenAddressId: '1',
       // 收货地址列表
       addresslist: [],
@@ -31,6 +32,7 @@ export const useShopStore = defineStore('shop', {
     async addshopping(params:addshopping) {
       const { data: res } = await addShoppingApi(params)
       if(res.code !== 200) return showFailToast(res.message)
+      this.getshopping()
       return showSuccessToast(res.message)
     },
     // 获取购物车数据
@@ -43,12 +45,14 @@ export const useShopStore = defineStore('shop', {
     async delshopping(id:number) {
       const { data: res } = await delShoppingApi({id:id})
       if(res.code !== 200) return showFailToast(res.message)
+      this.getshopping()
     },
   }
 })
 
 type addshopping = {
   id?: number,
+  sid: number,
   user_id: number,
   good_id: number,
   good_name: string,
@@ -56,6 +60,7 @@ type addshopping = {
   good_url: string,
   good_price: number,
   good_count: number,
+  brand: string,
   inventory: number,
   disposition: string,
   checkout?: number|boolean,
@@ -79,6 +84,7 @@ type addressView = {
 }
 type shopData = {
   shopCart: addshopping[],
+  allChecked: boolean,
   chosenAddressId: string,
   addresslist: address[],
   addressViewList: addressView[],

@@ -60,7 +60,19 @@
       <home-nav />
       <home-floor v-for="(item, index) in homeStore.homeFloor" :key="item.id" :obj="item" :router="routers[index]">
         <template #header>
-          <div v-if="item.name === '秒杀专区'">123</div>
+          <div v-if="item.name === '秒杀专区'">
+            <van-count-down millisecond :time="new Date('2023/08/02 14:00:00').getTime() - new Date().getTime()">
+              <template #default="timeData">
+                <span class="block">{{ timeData.days }}</span>
+                <span class="colon">天 </span>
+                <span class="block">{{ timeData.hours<10? '0' + timeData.hours: timeData.hours }}</span>
+                <span class="colon">:</span>
+                <span class="block">{{ timeData.minutes<10? '0' + timeData.minutes: timeData.minutes }}</span>
+                <span class="colon">:</span>
+                <span class="block">{{ timeData.seconds<10? '0' + timeData.seconds: timeData.seconds }}</span>
+              </template>
+            </van-count-down>
+          </div>
           <div v-if="item.name === '猜你喜欢'"></div>
         </template>
         <template #main>
@@ -95,5 +107,14 @@
     padding-bottom: 50px;
     overflow: scroll;
     transition: padding-bottom 0.5s;
+  }
+
+  .block {
+    padding: 3px;
+    background-color: #fa436a;
+    color: #fff;
+  }
+  .colon {
+    margin: 0 2px;
   }
 </style>

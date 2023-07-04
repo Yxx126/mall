@@ -1,13 +1,12 @@
 <!-- 购物车页面 -->
 
 <script setup lang='ts'>
-  import { ref, onBeforeMount } from 'vue';
+  import { onBeforeMount } from 'vue';
   import { useRouter } from 'vue-router';
   import { useShopStore } from '@/stores/shop';
   import { useUserinfoStore } from '@/stores/user';
   import { showFailToast } from 'vant';
   import TabbarView from '@/components/tabbar/TabbarView.vue';
-  import { showToast } from 'vant';
 
   const router = useRouter()
   const shopStore = useShopStore()
@@ -18,25 +17,35 @@
   }
 
   onBeforeMount(() => {
-    checked.value = shopStore.shopCart.every(item => item.checkout)
+    shopStore.allChecked = shopStore.shopCart.every(item => item.checkout)
   })
 
-  // 是否全选
-  const checked = ref(false)
   // 购买按钮
   const onSubmit = () => {
+    // 所选商品
     const buyarr = shopStore.shopCart.filter(item => item.checkout)
+    // 库存为空的商品
+    const arr = buyarr.filter(item => item.inventory==0)
+    // 库存为空的商品名称
+    let names:string[] = []
+    arr.forEach(item => names.push(item.good_name))    
     // 判断是否选中了商品
     if(buyarr.length === 0) return showFailToast('请选择要购买的商品！')
+    // 判断库存是否为空
+    if(arr.length !== 0) return showFailToast(`${names.join('、')}，暂无库存！`)
     // 收货地址为空
     if(shopStore.addresslist.length === 0) return router.push({name: 'addresslist'})
     // 跳转支付页面
-    showToast ('跳转支付页面!')
+    router.push({
+      name: 'order',
+      query: {
+        type: 'shopbuy',
+      },
+    })
   }
   // 删除购物车数据
   const delItem = async (id:number) => {
     await shopStore.delshopping(id)
-    await shopStore.getshopping()
   }
   // 跳转到商品详情页
   const toGooddetail = (id:number) => {
@@ -47,14 +56,12 @@
       }
     })
   }
-  // 商品复选框
-  const updateChk = async () => {
-    const flag = shopStore.shopCart.every(item => item.checkout)
-    checked.value = flag
+  const updateChk = () => {
+    shopStore.allChecked = shopStore.shopCart.every(item => item.checkout)
   }
   // 全选按钮
   const allChk = () => {
-    const flag = checked.value
+    const flag = shopStore.allChecked
     shopStore.shopCart.forEach(item => item.checkout=flag)
   }
 </script>
@@ -84,8 +91,8 @@
             <img :src="item.good_url" @click.stop="toGooddetail(item.good_id)">
             <div class="goods-item-main">
               <div class="item-main" @click.stop="toGooddetail(item.good_id)">
-                <van-text-ellipsis class="item-main-name" :content="item.good_name" />
-                <van-text-ellipsis class="item-main-desc" :content="item.good_desc" />
+                <van-text-ellipsis style="width: 58vw;" class="item-main-name" :content="item.good_name" />
+                <van-text-ellipsis style="width: 58vw;" class="item-main-desc" :content="item.good_desc" />
               </div>
 
               <div style="font-size:13px">配置：{{ item.disposition }}</div>
@@ -103,12 +110,12 @@
           </template>
         </van-swipe-cell>
       </div>
-      
+
       <div style="margin-top: 10px; font-size: 13px; color: #606266; text-align: center;" v-else>购物车为空，请添加商品！</div>
 
       <!-- 立即购买模块 -->
       <van-submit-bar style="transform: translateY(-100%); border-bottom: 1px solid #ccc;" :price="shopStore.addPrice" button-text="提交订单" @submit="onSubmit">
-        <van-checkbox v-model="checked" @click="allChk">全选</van-checkbox>
+        <van-checkbox v-model="shopStore.allChecked" @click="allChk">全选</van-checkbox>
       </van-submit-bar>
 
       <tabbar-view />

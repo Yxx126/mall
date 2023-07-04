@@ -12,7 +12,7 @@ export const delStarApi = (data:delshopping) => $http.get('/my/star/delstar', {p
 export const selectGoodStarApi = (data:selectStar) => $http.get('/my/star/select', {params:data, headers:{Authorization:localStorage.getItem('token')}})
 
 // 收藏品牌
-export const addBrandApi = (data:addBrand) => $http.get('/my/star/addbrand', {params:data, headers:{Authorization:userinfoStore.token}})
+export const addBrandApi = (data:addBrand) => $http.get('/my/star/addbrand', {params:data, headers:{Authorization:localStorage.getItem('token')}})
 // 获取收藏品牌数据
 export const brandStarApi = () => $http.get('/my/star/brandstar', {headers:{Authorization:localStorage.getItem('userinfo')}})
 // 判断是否已收藏该品牌

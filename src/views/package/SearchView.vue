@@ -38,7 +38,7 @@
     })
   }
   const search = (e:string) => {
-    const arr = [...goodStore.search_history]
+    const arr:string[] = [...goodStore.search_history]
     arr.push(e)
     arr.reverse()
     const set = new Set(arr)

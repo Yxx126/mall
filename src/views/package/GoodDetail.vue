@@ -69,6 +69,7 @@
         parameter.push(goodStore.good.parameter[key])
       }
     }
+    goodStore.good_inv = goodStore.good_invs[0]
   })
 
   // 轮播图区域
@@ -97,7 +98,8 @@
   const show_parameter = ref(false);
   const showPopup = (name:string) => {
     showName.value = name
-    show_parameter.value = true    
+    show_parameter.value = true
+    if(is_buy.value===true) is_buy.value=false
   }
 
   // 更改商品所选类型
@@ -108,22 +110,24 @@
   
   // 加入购物车
   const addshopping = async () => {
+    if(goodStore.good.sales === 0) return showToast('暂无库存！')
     let str1 = ''
     for(const key in goodStore.selected_good_type) {
       str1 = str1 + goodStore.selected_good_type[key] + ' '
     }
     await shopStore.addshopping({
+      sid: goodStore.good_inv.id,
       user_id: userinfoStore.userinfo.id,
       good_id: goodStore.good.id,
       good_name: goodStore.good.good_name,
       good_desc: goodStore.good.good_desc,
       good_url: goodStore.good.good_url.split(',')[0],
-      good_price: goodStore.good_price,
+      good_price: goodStore.good_price + goodStore.good_addprice,
       good_count: 1,
+      brand: goodStore.good.brand.name,
       inventory: goodStore.good_inv.inventory,
       disposition: str1,
     })
-    await shopStore.getshopping()
   }
   // 收藏样式
   const star = {
@@ -171,8 +175,24 @@
     })
   }
   // 立即购买
+  const is_buy = ref(false)
   const buy = () => {
-    showToast ('点击了立即购买！')
+    if(goodStore.good_inv.inventory === 0) {
+      return showToast ('暂无库存！')
+    }
+    showPopup('type')
+    is_buy.value = true
+  }
+  const toOrder = () => {
+    if(shopStore.addresslist.length === 0) {
+      return router.push({name: 'addresslist'})
+    }
+    router.push({
+      name: 'order',
+      query: {
+        type: 'buy',
+      },
+    })
   }
 </script>
 
@@ -238,13 +258,13 @@
       <van-popup
         v-model:show="show_parameter"
         position="bottom"
-        :style="{ height: '50%' }"
+        style="padding-bottom: 15px;"
         :overlay-style="{backgroundColor:'rgba(0,0,0,.4)'}"
       >
         <div v-if="showName==='type'">
           <div class="show-type">
             <div class="show-type-header">
-              <img style="width: 85px; height: 85px;" :src="images[0]">
+              <img style="width: 85px; height: 85px; margin-right: 5px;" :src="images[0]">
               <div class="show-type-header-right">
                 <p style="font-size: 16px; color: #fa436a;">￥{{ goodStore.good_price + goodStore.good_addprice }}</p>
                 <p style="font-size: 13px; color: #606266;">库存: {{ goodStore.good_inv.inventory }}</p>
@@ -257,6 +277,11 @@
                 <div><span v-for="(it, i) in type[index].split(',')" :key="i" :class="it===goodStore.selected_good_type[index]? 'active': ''" @click="updateType(it, index)">{{ it }}</span></div>
               </div>
             </div>
+          </div>
+          <!-- 支付按钮 -->
+          <div v-if="is_buy" class="buy-btns">
+            <van-button block round @click="show_parameter = false">取消</van-button>
+            <van-button block round @click="toOrder" type="danger">去支付</van-button>
           </div>
         </div>
         <div v-if="showName==='parameter'">
@@ -392,6 +417,14 @@
           }
         }
       }
+    }
+
+    .buy-btns {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0 10px;
+      padding: 5px 15px;
     }
 
     .show-parameter {

@@ -1,13 +1,19 @@
 <!-- 我的页面 -->
 
 <script setup lang='ts'>
+  import { onBeforeMount } from 'vue';
   import { useRouter } from 'vue-router';
   import { useUserinfoStore } from '@/stores/user';
+  import { useOrderStore } from '@/stores/order';
   import { showImagePreview } from 'vant'
 
   const router = useRouter()
   const userinfoStore = useUserinfoStore()
+  const orderStore = useOrderStore()
 
+  onBeforeMount(() => {
+    orderStore.getTypeCount()
+  })
   const toLogin = () => {
     router.push({ name: 'login' })
   }
@@ -26,7 +32,16 @@
       images: [img],
       showIndex:false,
     })
-  }  
+  }
+  const toOrderlist = (title:string, status:number) => {
+    router.push({
+      name: 'orderlist',
+      query: {
+        title: title,
+        status: status,
+      }
+    })
+  }
 </script>
 
 <template>
@@ -46,6 +61,7 @@
           <img :src="userinfoStore.userinfo.img" @click.stop="preview(userinfoStore.userinfo.img)">
           <div>{{ userinfoStore.userinfo.nickname }}</div>
         </div>
+        
         <main>
           <div class="box1">
             <div class="box1-item">
@@ -62,22 +78,30 @@
             </div>
           </div>
           <div class="box2">
-            <div class="box2-item">
-              <van-icon name="bill-o" class="box2-icon" />
-              <p>全部订单</p>
-            </div>
-            <div class="box2-item">
-              <van-icon name="balance-list-o" class="box2-icon" />
-              <p>待付款</p>
-            </div>
-            <div class="box2-item">
-              <van-icon name="sign" class="box2-icon" />
-              <p>待收货</p>
-            </div>
-            <div class="box2-item">
-              <van-icon name="after-sale" class="box2-icon" />
-              <p>售后</p>
-            </div>
+            <van-badge style="width: 12.8vw;">
+              <div class="box2-item" @click="toOrderlist('全部订单', -1)">
+                <van-icon name="bill-o" class="box2-icon" />
+                <p>全部订单</p>
+              </div>
+            </van-badge>
+            <van-badge style="width: 12.8vw;" :content="orderStore.type_count['0']===0? undefined: orderStore.type_count['0']" max="99">
+              <div class="box2-item" @click="toOrderlist('待付款', 1)">
+                  <van-icon name="balance-list-o" class="box2-icon" />
+                  <p>待付款</p>
+              </div>
+            </van-badge>
+            <van-badge style="width: 12.8vw;" :content="orderStore.type_count['1']===0? undefined: orderStore.type_count['1']" max="99">
+              <div class="box2-item" @click="toOrderlist('待收货', 3)">
+                <van-icon name="sign" class="box2-icon" />
+                <p>待收货</p>
+              </div>
+            </van-badge>
+            <van-badge style="width: 12.8vw;">
+              <div class="box2-item" @click="toOrderlist('售后', 4)">
+                <van-icon name="after-sale" class="box2-icon" />
+                <p>售后</p>
+              </div>
+            </van-badge>
           </div>
           <div class="box3">
             <div class="box3-item" @click.stop="toAddress">
@@ -191,6 +215,8 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            width: 48px;
+            margin-top: 0;
 
             .box2-icon {
               margin-bottom: 10px;

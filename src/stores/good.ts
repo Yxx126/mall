@@ -22,7 +22,7 @@ export const useGoodStore = defineStore('good', {
       // 搜索建议列表
       searchlist: Array<goodlistData>(),
       // 搜索历史
-      search_history: [],
+      search_history: Array<string>(),
     }
   },
   getters: {
@@ -58,9 +58,9 @@ export const useGoodStore = defineStore('good', {
         let flag = true
         typeKey.forEach((it, i) => {
           if(!flag) return false
-          flag = item[it]===this.selected_good_type[i]
+          flag = item[it]===this.selected_good_type[i]        
         })
-        if(flag) this.good_inv = item
+        if(flag) this.good_inv = item        
       });
       this.good_addprice = this.good_inv.price
     },
