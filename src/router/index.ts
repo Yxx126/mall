@@ -1,8 +1,4 @@
 import { createRouter, createWebHistory, createWebHashHistory } from 'vue-router'
-import pinia from '../stores';
-import { useRouterStore } from '../stores/router';
-
-const routerStore = useRouterStore(pinia)
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -102,28 +98,6 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   window.scrollTo(0, 0)
-  // let flag = false
-  // const timer = setTimeout(() => {
-  //   if(flag) return false
-  //   flag = true
-  //   if(timer) clearTimeout(timer)
-  //   window.addEventListener('popstate', () => {
-  //     // if(routerStore.flag) {
-  //     //   console.log('非物理返回键');
-    
-  //     //   next()
-  //     // }
-  //     // if(!routerStore.flag) {
-  //     //   console.log('物理返回键');
-        
-  //     //   // router.back()
-  //     // }
-  //     // clearTimeout(timer)
-  //     // flag = false
-  //     console.log(window.history);
-      
-  //  })
-  // }, 300)
   next()
 })
 

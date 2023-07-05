@@ -217,7 +217,7 @@
     width: 100vw;
     height: 93.1vh;
     margin-top: 46px;
-    background: url('../assets/images//login.jpg');
+    background: url('../../assets/images//login.jpg');
     background-size: cover;
     text-align: center;
     overflow: hidden;

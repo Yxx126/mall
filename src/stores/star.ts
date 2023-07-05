@@ -27,8 +27,6 @@ export const useStarStore = defineStore('star', {
     // 获取收藏商品数据
     async getstar() {
       const { data: res } = await getStarApi()
-      console.log(res);
-      
       if(res.code !== 200) return showFailToast(res.message)
       this.goodStar = res.data
     },
