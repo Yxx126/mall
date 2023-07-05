@@ -14,7 +14,7 @@ export const selectGoodStarApi = (data:selectStar) => $http.get('/my/star/select
 // 收藏品牌
 export const addBrandApi = (data:addBrand) => $http.get('/my/star/addbrand', {params:data, headers:{Authorization:localStorage.getItem('token')}})
 // 获取收藏品牌数据
-export const brandStarApi = () => $http.get('/my/star/brandstar', {headers:{Authorization:localStorage.getItem('userinfo')}})
+export const brandStarApi = () => $http.get('/my/star/brandstar', {headers:{Authorization:localStorage.getItem('token')}})
 // 判断是否已收藏该品牌
 export const selectBrandStarApi = (data:brandStar) => $http.get('/my/star/selectbrand', {params:data, headers:{Authorization:localStorage.getItem('token')}})
 

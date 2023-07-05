@@ -152,7 +152,7 @@
               <div class="goods-title-main">
                 <div @click="toBrand(item.brand)"><van-icon name="shop-o" /> {{ item.brand }}</div>
                 <div>
-                  <van-count-down v-if="item.status===1" millisecond :time="new Date(item.time).getTime() + (1 * 15 * 1000) - new Date().getTime()" format="mm:ss:SS" @finish="notOrder(item.id,item.sid)" />
+                  <van-count-down v-if="item.status===1" millisecond :time="new Date(item.time).getTime() + (15 * 60 * 1000) - new Date().getTime()" format="mm:ss:SS" @finish="notOrder(item.id,item.sid)" />
                   <p :class="item.status===0? 'status-item': ''">{{ orderStatus(item.status) }}</p>
                 </div>
               </div>

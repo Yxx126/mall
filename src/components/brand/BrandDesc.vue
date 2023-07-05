@@ -48,7 +48,7 @@
     router.push({
       name: 'branddetail',
       query: {
-        name: props.obj.brand,
+        name: props.obj.brand || props.obj.name,
       }
     })
   }

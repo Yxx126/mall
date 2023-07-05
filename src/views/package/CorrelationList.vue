@@ -69,9 +69,9 @@
       @click-left="onClickLeft"
     />
 
-    <img src="../assets/images/01.png" v-if="route.query.name === '品牌制造商直达'">
-    <img src="../assets/images/02.png" v-if="route.query.name === '新鲜好物'">
-    <img src="../assets/images/03.png" v-if="route.query.name === '人气推荐'">
+    <img src="../../assets/images/01.png" v-if="route.query.name === '品牌制造商直达'">
+    <img src="../../assets/images/02.png" v-if="route.query.name === '新鲜好物'">
+    <img src="../../assets/images/03.png" v-if="route.query.name === '人气推荐'">
 
     <div class="correlation-name" v-if="route.query.name === '品牌制造商直达'">相关品牌</div>
     <div class="correlation-name" v-if="route.query.name === '新鲜好物'">相关商品</div>

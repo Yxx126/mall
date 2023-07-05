@@ -7,6 +7,7 @@
   import { useShopStore } from '@/stores/shop';
   import { useStarStore } from '@/stores/star';
   import { useUserinfoStore } from '@/stores/user';
+  import { useRouterStore } from '@/stores/router';
   import { showImagePreview } from 'vant';
   import BrandDesc from '@/components/brand/BrandDesc.vue'; // 品牌信息组件
   import { showToast  } from 'vant'
@@ -17,9 +18,16 @@
   const shopStore = useShopStore()
   const starStore = useStarStore()
   const userinfoStore = useUserinfoStore()
+  const routerStore = useRouterStore()
 
   const onClickLeft = () => {
     router.go(-1)
+    let timer:ReturnType<typeof setTimeout>
+    routerStore.flag = true
+    timer = setTimeout(() => {
+      routerStore.flag = false
+      clearTimeout(timer)
+    }, 2000)
   }
 
   // 商品购买类型
