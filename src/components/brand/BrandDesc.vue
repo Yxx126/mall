@@ -39,8 +39,6 @@
   }
   onBeforeUpdate(async() => {
     // 判断该品牌是否被收藏
-    console.log(props.obj.brand||props.obj.name);
-    
     const res = await starStore.selectBrandStar(props.obj.brand||props.obj.name)    
     if(res.code === 200) star.color.value = '#fa436a'
     if(res.code === 201) star.color.value = '#606266'
