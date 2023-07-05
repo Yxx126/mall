@@ -17,7 +17,9 @@
   }
 
   onBeforeMount(() => {
-    shopStore.allChecked = shopStore.shopCart.every(item => item.checkout)
+    if(localStorage.getItem('token')) {
+      shopStore.allChecked = shopStore.shopCart.every(item => item.checkout)
+    }
   })
 
   // 购买按钮

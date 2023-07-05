@@ -12,6 +12,9 @@
     await classifyStore.getclassifyOne()
     await classifyStore.getclassifyTwo()
 
+    const w = document.documentElement.clientWidth
+    classifyStore.RightItemHeight = w / 100 * 23.6
+
     type classifyTwoData = { id:number, uid:number, name:string, url:string }
     let list = Array<classifyTwoData>()
     classifyStore.twoList = []
@@ -24,7 +27,6 @@
       })
       classifyStore.twoList.push(list)
     }    
-    classifyStore.RightHeight = 180
   })
 
   watchEffect(() => {

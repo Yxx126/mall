@@ -12,7 +12,9 @@
   const orderStore = useOrderStore()
 
   onBeforeMount(() => {
-    orderStore.getTypeCount()
+    if(localStorage.getItem('token')) {
+      orderStore.getTypeCount()
+    }
   })
   const toLogin = () => {
     router.push({ name: 'login' })
