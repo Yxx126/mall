@@ -109,7 +109,7 @@
     msg.value = "验证不通过"
   }
   const onRefresh = () => {
-    msg.value = "点击了刷新小图标"
+    msg.value = "刷新成功"
   }
   const handleClick = () => {
     // 刷新
@@ -192,7 +192,7 @@
     </div>
 
     <!-- 滑块 -->
-    <van-popup v-model:show="show_slide" :style="{ padding: '64px' }">
+    <van-popup v-model:show="show_slide" :style="{ padding: '64px'}">
       <div class="silde_box">
         <SlideVerify 
           class="silde_box"

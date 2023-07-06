@@ -1,7 +1,7 @@
 <!-- 品牌信息组件 -->
 
 <script setup lang='ts'>
-  import { ref, onBeforeUpdate } from 'vue';
+  import { ref, onBeforeMount, onBeforeUpdate } from 'vue';
   import { useRouter } from 'vue-router';
   import { useStarStore } from '@/stores/star';
 
@@ -37,6 +37,12 @@
   const star = {
     color: ref(''),
   }
+  onBeforeMount(async() => {
+    // 判断该品牌是否被收藏
+    const res = await starStore.selectBrandStar(props.obj.brand||props.obj.name)    
+    if(res.code === 200) star.color.value = '#fa436a'
+    if(res.code === 201) star.color.value = '#606266'
+  })
   onBeforeUpdate(async() => {
     // 判断该品牌是否被收藏
     const res = await starStore.selectBrandStar(props.obj.brand||props.obj.name)    
