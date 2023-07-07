@@ -45,6 +45,9 @@ npm run build
 npm run lint
 ```
 
+### 在线预览
+39.108.79.1：4001  
+
 ### 图片展示
 首页  
 ![Alt text](./src/assets/images/md/image.png)
